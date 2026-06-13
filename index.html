@@ -1,0 +1,2570 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>安の晴夜预言</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500;1,600&family=Noto+Serif+SC:wght@300;400;500;600&family=Playfair+Display:ital,wght@1,500;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rose-gold: rgba(255, 229, 247, .82);
+      --rose-gold-light: rgba(255, 246, 253, .94);
+      --dusty-purple: #b77ab3;
+      --deep-plum: #56346f;
+      --parchment: rgba(255, 250, 255, .92);
+      --ink: rgba(255, 250, 255, .94);
+      --ink-light: rgba(255, 239, 252, .78);
+      --gold: rgba(255, 237, 250, .72);
+      --night: #1f1530;
+      --paper: transparent;
+      --paper-strong: rgba(255, 235, 250, 0.16);
+      --font-hand: "Noto Serif SC", "Songti SC", "STSong", serif;
+      --font-serif: "Noto Serif SC", serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: var(--font-serif);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(247, 186, 218, .54) 0%, rgba(247, 186, 218, .22) 24%, rgba(247, 186, 218, 0) 48%),
+        radial-gradient(circle at 86% 86%, rgba(255, 154, 205, .46) 0%, rgba(255, 154, 205, .2) 29%, rgba(255, 154, 205, 0) 58%),
+        radial-gradient(circle at 50% 6%, rgba(255, 247, 255, .16) 0%, rgba(255, 247, 255, 0) 32%),
+        linear-gradient(150deg, #5a3b82 0%, #78539c 35%, #b06fac 68%, #e6a0c6 100%);
+      overflow-x: hidden;
+    }
+
+    body.night {
+      color: var(--parchment);
+      background:
+        radial-gradient(circle at 20% 12%, rgba(242, 181, 214, .38) 0%, rgba(242, 181, 214, .15) 26%, rgba(242, 181, 214, 0) 54%),
+        radial-gradient(circle at 86% 82%, rgba(246, 130, 197, .42) 0%, rgba(246, 130, 197, .16) 31%, rgba(246, 130, 197, 0) 60%),
+        radial-gradient(circle at 52% 8%, rgba(255, 247, 255, .12) 0%, rgba(255, 247, 255, 0) 34%),
+        linear-gradient(150deg, #49306f 0%, #65418b 40%, #965399 72%, #cd7db3 100%);
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      opacity: .38;
+      background-image:
+        radial-gradient(circle, rgba(255, 250, 255, .8) 0 1px, transparent 1.6px),
+        radial-gradient(circle, rgba(255, 236, 248, .58) 0 1px, transparent 1.4px);
+      background-size: 148px 148px, 223px 223px;
+      background-position: 18px 34px, 90px 18px;
+    }
+
+    body::after {
+      opacity: .34;
+      background:
+        radial-gradient(ellipse at 15% 104%, rgba(255, 176, 214, .3) 0%, rgba(255, 176, 214, 0) 36%),
+        radial-gradient(ellipse at 88% 106%, rgba(255, 194, 222, .36) 0%, rgba(255, 194, 222, 0) 38%);
+    }
+
+    button, input, textarea { font: inherit; }
+
+    .sky-layer {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .moon {
+      position: absolute;
+      top: 7vh;
+      right: 11vw;
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 36% 34%, rgba(255, 235, 247, .34), rgba(255, 235, 247, .12) 52%, rgba(255, 235, 247, .04) 100%);
+      box-shadow: 0 0 62px rgba(255, 220, 246, 0.32), inset -24px -18px 0 rgba(103, 55, 126, 0.10);
+      animation: moonDrift 18s ease-in-out infinite;
+    }
+
+    .star {
+      position: absolute;
+      color: rgba(255, 246, 225, 0.82);
+      font-family: "Cormorant Garamond", serif;
+      animation: fall var(--duration) linear infinite;
+      animation-delay: var(--delay);
+      opacity: var(--opacity);
+    }
+
+    .star:nth-child(1) { left: 8%; top: -8%; --duration: 16s; --delay: -2s; --opacity: .7; }
+    .star:nth-child(2) { left: 21%; top: -12%; --duration: 11s; --delay: -8s; --opacity: .45; }
+    .star:nth-child(3) { left: 36%; top: -10%; --duration: 18s; --delay: -12s; --opacity: .62; }
+    .star:nth-child(4) { left: 54%; top: -15%; --duration: 13s; --delay: -4s; --opacity: .5; }
+    .star:nth-child(5) { left: 68%; top: -7%; --duration: 17s; --delay: -10s; --opacity: .72; }
+    .star:nth-child(6) { left: 82%; top: -11%; --duration: 14s; --delay: -6s; --opacity: .52; }
+    .star:nth-child(7) { left: 92%; top: -9%; --duration: 19s; --delay: -14s; --opacity: .44; }
+
+    .shooting-star {
+      position: absolute;
+      top: 18%;
+      left: 72%;
+      width: 90px;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,246,225,.92));
+      transform: rotate(-28deg);
+      opacity: 0;
+      animation: meteor 9s ease-in-out infinite;
+    }
+
+    .sky-layer::before {
+      content: "";
+      position: absolute;
+      top: 20%;
+      left: 10%;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 250, 255, .84);
+      box-shadow:
+        220px -54px 0 -2px rgba(255, 250, 255, .7),
+        520px 24px 0 -1px rgba(255, 250, 255, .65),
+        860px -38px 0 -2px rgba(255, 250, 255, .72),
+        1040px 126px 0 -1px rgba(255, 250, 255, .56),
+        92px 330px 0 -1px rgba(255, 250, 255, .58),
+        690px 360px 0 -2px rgba(255, 250, 255, .64);
+      filter: blur(.15px);
+    }
+
+    .app {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+    }
+
+    .page {
+      display: none;
+      width: min(960px, 100%);
+      min-height: min(760px, calc(100vh - 68px));
+      max-height: calc(100vh - 60px);
+      overflow: auto;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 250, 255, .28) transparent;
+    }
+
+    .page.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      animation: pageIn .7s ease both;
+    }
+
+    #drawPage {
+      width: min(1180px, 100%);
+    }
+
+    #readingPage {
+      width: min(1280px, 100%);
+      max-height: none;
+      overflow: visible;
+    }
+
+    .frame {
+      position: relative;
+      border: 1px solid rgba(255, 244, 253, .28);
+      border-radius: 14px;
+      background: var(--paper);
+      backdrop-filter: blur(6px);
+      box-shadow: inset 0 0 34px rgba(255, 242, 253, .04);
+      padding: clamp(22px, 4vw, 48px);
+    }
+
+    .night .frame {
+      background: transparent;
+      border-color: rgba(255, 244, 253, .24);
+      box-shadow: none;
+    }
+
+    .frame::before,
+    .frame::after {
+      content: "";
+      position: absolute;
+      color: rgba(255, 250, 255, .86);
+      font-size: 21px;
+    }
+
+    .frame::before { display: none; }
+    .frame::after { display: none; }
+
+    .frame.center::before {
+      content: "✿";
+      display: block;
+      position: static;
+      margin: 0 auto 28px;
+      color: rgba(255, 250, 255, .92);
+      font-family: "Noto Serif SC", serif;
+      font-size: clamp(38px, 5.8vw, 56px);
+      line-height: 1;
+      text-shadow: 0 0 22px rgba(255, 233, 250, .34);
+    }
+
+    .center { text-align: center; }
+
+    .kicker {
+      color: var(--rose-gold);
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-size: 18px;
+      letter-spacing: .02em;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-weight: 400;
+    }
+
+    h1 {
+      margin-top: 12px;
+      font-family: var(--font-hand);
+      font-size: clamp(18px, 2.8vw, 28px);
+      line-height: 1.5;
+      color: rgba(255, 250, 255, .9);
+      font-weight: 300;
+      letter-spacing: .56em;
+      text-indent: .56em;
+    }
+
+    #passwordPage h1::before {
+      content: "Tarot";
+      display: block;
+      margin: 0 0 8px;
+      color: rgba(255, 250, 255, .94);
+      font-family: "Playfair Display", "Cormorant Garamond", serif;
+      font-size: clamp(48px, 7.6vw, 76px);
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: .01em;
+      text-indent: 0;
+    }
+
+    .night h1, .night h2, .night h3 { color: var(--parchment); }
+
+    h2 {
+      font-family: var(--font-hand);
+      font-size: clamp(24px, 3.4vw, 38px);
+      color: rgba(255, 250, 255, .92);
+      line-height: 1.28;
+      font-weight: 300;
+      letter-spacing: .24em;
+      text-indent: .24em;
+    }
+
+    h3 {
+      font-family: var(--font-hand);
+      font-size: 22px;
+      color: rgba(255, 250, 255, .92);
+      font-weight: 300;
+      letter-spacing: .1em;
+    }
+
+    .brand-title {
+      letter-spacing: .12em;
+      text-indent: 0;
+    }
+
+    .brand-title .kana {
+      display: inline-block;
+      margin: 0 .08em;
+      font-size: .72em;
+      letter-spacing: 0;
+      opacity: .82;
+      transform: translateY(-.04em);
+    }
+
+    .home-copy {
+      max-width: 430px;
+      font-size: clamp(15px, 1.9vw, 18px);
+      line-height: 2;
+      font-style: normal;
+      letter-spacing: .08em;
+    }
+
+    .home-copy .second-line {
+      display: block;
+      margin-top: 4px;
+    }
+
+    .divider {
+      margin: 14px 0;
+      color: rgba(255, 250, 255, .72);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 18px;
+    }
+
+    .note {
+      margin: 14px auto 0;
+      max-width: 640px;
+      font-family: var(--font-hand);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.85;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink-light);
+    }
+
+    .night .note, .night .muted { color: rgba(240, 228, 216, .78); }
+
+    .muted {
+      color: var(--ink-light);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      min-height: 44px;
+      border: 1px solid rgba(255, 250, 255, .56);
+      border-radius: 999px;
+      color: rgba(255, 250, 255, .94);
+      background: rgba(255, 228, 249, .12);
+      padding: 9px 24px;
+      cursor: pointer;
+      font-family: "Cormorant Garamond", "Noto Serif SC", serif;
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 600;
+      letter-spacing: .18em;
+      transition: transform .25s ease, background .25s ease, color .25s ease, box-shadow .25s ease;
+    }
+
+    .night .btn { color: var(--parchment); }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 240, 252, .2);
+      box-shadow: 0 0 32px rgba(255, 232, 250, .18);
+    }
+
+    .btn.primary {
+      background: rgba(255, 230, 250, .16);
+    }
+
+    .icon-btn {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border-radius: 50%;
+    }
+
+    input, textarea {
+      width: min(560px, 100%);
+      border: 1px solid rgba(255, 250, 255, .36);
+      border-radius: 20px;
+      background: rgba(255, 232, 250, .14);
+      color: rgba(255, 250, 255, .92);
+      padding: 12px 16px;
+      outline: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: rgba(255, 250, 255, .58); }
+
+    textarea {
+      min-height: 104px;
+      resize: vertical;
+      line-height: 1.8;
+    }
+
+    .night input, .night textarea {
+      color: var(--parchment);
+      background: rgba(255, 255, 255, .08);
+    }
+
+    .field-error {
+      min-height: 20px;
+      margin-top: 8px;
+      color: rgba(255, 232, 250, .86);
+      font-size: 12px;
+    }
+
+    #questionPage .frame.center::before,
+    #dailyPage .frame.center::before,
+    #galleryPage .frame.center::before,
+    #historyPage .frame.center::before {
+      margin-bottom: 14px;
+      font-size: 34px;
+      opacity: .82;
+    }
+
+    #questionPage h2,
+    #dailyPage h2,
+    #galleryPage h2,
+    #historyPage h2,
+    #readingPage h2 {
+      font-size: clamp(24px, 3vw, 34px);
+    }
+
+    #questionPage .kicker,
+    #dailyPage .kicker,
+    #galleryPage .kicker,
+    #historyPage .kicker,
+    #readingPage .kicker {
+      font-size: 16px;
+    }
+
+    #questionPage .divider,
+    #dailyPage .divider,
+    #galleryPage .divider,
+    #historyPage .divider,
+    #readingPage .divider {
+      margin: 10px 0;
+    }
+
+    .spread-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      width: min(560px, 100%);
+      margin: 18px auto 14px;
+    }
+
+    .spread-card {
+      border: 1px solid rgba(255, 250, 255, .34);
+      border-radius: 18px;
+      background: rgba(255, 232, 250, .12);
+      color: rgba(255, 250, 255, .9);
+      padding: 14px;
+      cursor: pointer;
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+    }
+
+    .spread-card.active {
+      border-color: var(--gold);
+      background: rgba(255, 240, 252, .18);
+      transform: translateY(-2px);
+    }
+
+    .spread-card strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 6px;
+      font-weight: 400;
+      letter-spacing: .18em;
+    }
+
+    .spread-card span {
+      display: block;
+      font-size: 13px;
+      line-height: 1.65;
+      color: rgba(255, 239, 252, .72);
+    }
+
+    #questionPage .frame {
+      width: min(760px, 100%);
+      margin: auto;
+      padding-top: clamp(30px, 4.4vw, 54px);
+      padding-bottom: clamp(30px, 4vw, 46px);
+    }
+
+    #questionPage .frame.center::before {
+      margin-bottom: 18px;
+    }
+
+    #questionPage .kicker {
+      margin-bottom: 8px;
+    }
+
+    #questionPage h2 {
+      margin: 0 auto 30px;
+      max-width: 720px;
+      line-height: 1.22;
+    }
+
+    #questionPage .spread-options {
+      margin: 0 auto 26px;
+      gap: 18px;
+    }
+
+    #questionPage .spread-card {
+      min-height: 96px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 16px 20px;
+    }
+
+    #questionPage textarea {
+      min-height: 96px;
+    }
+
+    #questionPage .field-error {
+      min-height: 18px;
+      margin-top: 6px;
+    }
+
+    #questionPage .actions {
+      margin-top: 14px;
+    }
+
+    .draw-stage {
+      min-height: calc(100vh - 68px);
+      width: min(1180px, 100%);
+      display: grid;
+      grid-template-rows: auto auto minmax(390px, 1fr) auto;
+      gap: 18px;
+    }
+
+    .draw-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      color: var(--parchment);
+    }
+
+    .draw-header h2 { font-size: clamp(28px, 4vw, 44px); }
+
+    .question-ribbon {
+      max-width: 520px;
+      text-align: right;
+      font-family: var(--font-hand);
+      font-size: 15px;
+      line-height: 1.7;
+      font-weight: 300;
+      color: rgba(255, 239, 252, .72);
+    }
+
+    .chosen-row {
+      display: flex;
+      justify-content: center;
+      gap: clamp(12px, 3vw, 28px);
+      min-height: clamp(188px, 25vh, 230px);
+      align-items: center;
+    }
+
+    .slot {
+      width: clamp(104px, 15vw, 142px);
+      aspect-ratio: 2 / 3;
+      border: 1px dashed rgba(232, 196, 196, .42);
+      display: grid;
+      place-items: center;
+      color: rgba(240, 228, 216, .52);
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      position: relative;
+      perspective: 900px;
+    }
+
+    .slot-label {
+      position: absolute;
+      top: calc(100% + 8px);
+      width: 150px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(240, 228, 216, .58);
+    }
+
+    .arc-wrap {
+      position: relative;
+      min-height: clamp(390px, 52vh, 560px);
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      perspective: 1200px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      mask-image: linear-gradient(90deg, transparent 0, #000 8%, #000 92%, transparent 100%);
+    }
+
+    .arc-wrap::-webkit-scrollbar { display: none; }
+
+    .arc {
+      min-width: max-content;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(14px, 1.8vw, 20px);
+      padding: clamp(92px, 16vh, 170px) clamp(42px, 6vw, 76px) 92px;
+      transform-style: preserve-3d;
+    }
+
+    .draw-card {
+      position: relative;
+      width: clamp(92px, 10vw, 118px);
+      aspect-ratio: 2 / 3;
+      flex: 0 0 auto;
+      transform: translateY(var(--y)) rotate(var(--r)) translateZ(var(--z));
+      transform-origin: center bottom;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      transition: transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease, filter .35s ease;
+      filter: drop-shadow(0 18px 26px rgba(62, 30, 90, .32));
+    }
+
+    .draw-card:hover {
+      transform: translateY(calc(var(--y) - 22px)) rotate(var(--r)) translateZ(42px);
+      filter: drop-shadow(0 24px 36px rgba(255, 230, 250, .24));
+    }
+
+    .draw-card.is-leaving {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .card-shell {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform .8s cubic-bezier(.2,.85,.28,1);
+    }
+
+    .card-shell.flipped { transform: rotateY(180deg); }
+
+    .card-face,
+    .card-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      overflow: hidden;
+      border: 1px solid rgba(255, 250, 255, .46);
+      border-radius: 11px;
+      background: #c987c0;
+    }
+
+    .card-face {
+      transform: rotateY(180deg);
+      display: grid;
+      place-items: center;
+      padding: 4px;
+    }
+
+    .card-face img {
+      width: 100%;
+      height: 100%;
+      min-width: 0;
+      min-height: 0;
+      object-fit: contain;
+      display: block;
+      background: rgba(255, 246, 253, .92);
+      border-radius: 7px;
+    }
+
+    .card-shell.is-reversed .card-face img {
+      transform: rotate(180deg);
+    }
+
+    .card-title {
+      display: none;
+      padding: 5px 4px 6px;
+      background: rgba(95, 48, 119, .68);
+      color: rgba(255, 250, 255, .9);
+      font-size: 11px;
+      line-height: 1.15;
+      text-align: center;
+      white-space: normal;
+    }
+
+    .card-back {
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 28% 26%, rgba(255, 246, 253, .5) 0%, rgba(255, 246, 253, .16) 33%, rgba(255, 246, 253, 0) 58%),
+        radial-gradient(circle at 18% 20%, rgba(255, 250, 255, .42) 0 1px, transparent 1.8px),
+        radial-gradient(circle at 76% 28%, rgba(255, 250, 255, .34) 0 1px, transparent 1.8px),
+        radial-gradient(circle at 34% 74%, rgba(255, 250, 255, .28) 0 1px, transparent 1.8px),
+        linear-gradient(160deg, #e1a6d2 0%, #c680c4 48%, #8654a2 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 250, 255, .14),
+        inset 0 0 24px rgba(255, 244, 253, .08);
+    }
+
+    .card-back::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(255, 250, 255, .34);
+      border-radius: 8px;
+      box-shadow: inset 0 0 18px rgba(255, 250, 255, .04);
+    }
+
+    .card-back::after {
+      content: "✦";
+      width: 46%;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 0;
+      color: rgba(255, 250, 255, .92);
+      font-size: 32px;
+      text-shadow: 0 0 18px rgba(255, 238, 252, .24);
+      box-shadow: none;
+    }
+
+    .flight-card {
+      position: fixed;
+      z-index: 30;
+      width: 120px;
+      aspect-ratio: 2 / 3;
+      pointer-events: none;
+      transition: left .78s cubic-bezier(.2,.82,.2,1), top .78s cubic-bezier(.2,.82,.2,1), width .78s cubic-bezier(.2,.82,.2,1), transform .78s cubic-bezier(.2,.82,.2,1), filter .78s ease;
+      filter: drop-shadow(0 25px 44px rgba(232,196,196,.24));
+    }
+
+    .flight-card.pausing {
+      filter: drop-shadow(0 0 28px rgba(255, 241, 253, .52)) drop-shadow(0 26px 56px rgba(76, 36, 104, .28));
+    }
+
+    .flight-card.pausing::before {
+      content: "";
+      position: absolute;
+      inset: -28px;
+      border-radius: 28px;
+      background: radial-gradient(circle, rgba(255, 242, 253, .28), rgba(255, 242, 253, 0) 68%);
+      animation: pulseAura 1.45s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    .slot .chosen-card {
+      width: calc(100% - 8px);
+      height: calc(100% - 8px);
+      filter: drop-shadow(0 20px 32px rgba(0,0,0,.22));
+      animation: settle .55s ease both;
+    }
+
+    .arc-controls {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: rgba(240, 228, 216, .72);
+    }
+
+    .segment-label {
+      min-width: 130px;
+      text-align: center;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+    }
+
+    .reading-layout {
+      display: grid;
+      grid-template-columns: minmax(150px, 230px) minmax(0, 1fr);
+      gap: clamp(22px, 4vw, 56px);
+      align-items: start;
+    }
+
+    .reading-cards {
+      display: grid;
+      gap: 12px;
+      justify-items: center;
+    }
+
+    .reading-card {
+      width: min(142px, 100%);
+      background: var(--paper-strong);
+      border: 1px solid rgba(255, 250, 255, .28);
+      border-radius: 14px;
+      padding: 8px;
+      box-shadow: 0 18px 38px rgba(58, 34, 72, .1);
+    }
+
+    .reading-card.compact {
+      width: min(128px, 100%);
+    }
+
+    .reading-card img {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      object-fit: contain;
+      background: rgba(255, 246, 253, .9);
+      display: block;
+    }
+
+    .reading-card.reversed img {
+      transform: rotate(180deg);
+    }
+
+    .reading-card p {
+      margin: 10px 0 0;
+      text-align: center;
+      line-height: 1.5;
+      font-size: 13px;
+      color: rgba(255, 250, 255, .86);
+    }
+
+    .typewriter {
+      min-height: 360px;
+      overflow: visible;
+      white-space: pre-wrap;
+      font-family: var(--font-hand);
+      font-size: clamp(15px, 1.55vw, 18px);
+      line-height: 2.05;
+      font-style: normal;
+      font-weight: 300;
+      color: var(--ink-light);
+      padding-right: 0;
+    }
+
+    #dailyPage.page.active {
+      justify-content: flex-start;
+    }
+
+    #dailyPage .frame {
+      width: 100%;
+      padding-top: clamp(18px, 3vw, 34px);
+    }
+
+    #dailyPage .frame.center::before {
+      margin-bottom: 8px;
+      font-size: clamp(26px, 3vw, 34px);
+    }
+
+    #dailyPage .divider {
+      margin: 8px 0 12px;
+    }
+
+    #dailyContent {
+      padding-bottom: 12px;
+    }
+
+    #dailyContent .daily-subtitle {
+      margin-bottom: 12px;
+      font-size: clamp(14px, 1.25vw, 16px);
+      line-height: 1.6;
+    }
+
+    #dailyContent .daily-card {
+      margin: 0 auto 12px;
+      width: min(124px, 24vw);
+    }
+
+    #dailyContent .daily-keyword {
+      margin: 0 auto 12px;
+      max-width: 520px;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    #dailyContent .daily-reading {
+      max-width: 680px;
+      font-size: clamp(14px, 1.25vw, 16px);
+      line-height: 1.9;
+      font-style: normal;
+      text-align: left;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 18px auto 22px;
+    }
+
+    .tab {
+      border: 1px solid rgba(255, 250, 255, .24);
+      border-radius: 999px;
+      background: rgba(255, 232, 250, .08);
+      color: rgba(255, 250, 255, .76);
+      padding: 7px 15px;
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: .08em;
+      cursor: pointer;
+      backdrop-filter: blur(10px);
+      transition: transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease, box-shadow .22s ease;
+    }
+
+    .tab:hover {
+      transform: translateY(-1px);
+      color: rgba(255, 250, 255, .92);
+      background: rgba(255, 238, 252, .13);
+    }
+
+    .tab.active {
+      background: rgba(255, 240, 252, .18);
+      border-color: rgba(255, 250, 255, .5);
+      color: rgba(255, 250, 255, .94);
+      box-shadow: 0 0 18px rgba(255, 231, 249, .18), inset 0 0 14px rgba(255, 250, 255, .08);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+      gap: 18px;
+      max-height: 56vh;
+      overflow: auto;
+      padding: 6px 6px 16px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 250, 255, .28) transparent;
+      transition: opacity .12s ease, transform .12s ease;
+      will-change: opacity, transform;
+    }
+
+    .gallery-grid.is-switching {
+      opacity: .38;
+      transform: translateY(3px);
+    }
+
+    .mini-card {
+      border: 1px solid rgba(255, 250, 255, .24);
+      border-radius: 14px;
+      background: rgba(255, 236, 251, .12);
+      padding: 10px;
+      cursor: pointer;
+      min-width: 0;
+      box-shadow: inset 0 0 22px rgba(255, 250, 255, .05), 0 16px 32px rgba(60, 31, 78, .08);
+      backdrop-filter: blur(12px);
+      transition: transform .24s ease, background .24s ease, border-color .24s ease, box-shadow .24s ease;
+      animation: galleryCardIn .18s ease both;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255, 250, 255, .42);
+      background: rgba(255, 240, 252, .18);
+      box-shadow: inset 0 0 24px rgba(255, 250, 255, .08), 0 22px 46px rgba(60, 31, 78, .16), 0 0 26px rgba(255, 232, 250, .12);
+    }
+
+    .mini-card img {
+      width: 100%;
+      aspect-ratio: 2 / 3;
+      object-fit: contain;
+      display: block;
+      padding: 5px;
+      border-radius: 9px;
+      background: rgba(255, 246, 253, .9);
+    }
+
+    .mini-card span {
+      display: block;
+      margin-top: 10px;
+      text-align: center;
+      line-height: 1.35;
+      color: rgba(255, 250, 255, .82);
+    }
+
+    .mini-card .card-name {
+      display: block;
+      font-family: var(--font-hand);
+      font-size: 13px;
+      font-weight: 300;
+      letter-spacing: .08em;
+      color: rgba(255, 250, 255, .9);
+    }
+
+    .mini-card .card-en {
+      display: block;
+      margin-top: 3px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 12px;
+      font-style: italic;
+      line-height: 1.2;
+      color: rgba(255, 239, 252, .58);
+      overflow-wrap: anywhere;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+      max-height: 58vh;
+      overflow: auto;
+    }
+
+    .history-item {
+      border: 1px solid rgba(255, 250, 255, .24);
+      border-radius: 16px;
+      background: rgba(255, 232, 250, .1);
+      padding: 12px 14px;
+      line-height: 1.7;
+      font-size: 13px;
+      color: rgba(255, 250, 255, .82);
+    }
+
+    .hidden-blessings {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 250, 255, .18);
+    }
+
+    .hidden-blessings h3 {
+      margin-bottom: 12px;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .hidden-blessing-item {
+      border: 1px solid rgba(255, 250, 255, .22);
+      border-radius: 16px;
+      background: rgba(255, 238, 252, .1);
+      padding: 12px 14px;
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.75;
+      color: rgba(255, 250, 255, .84);
+      box-shadow: inset 0 0 18px rgba(255, 250, 255, .04);
+      white-space: pre-line;
+    }
+
+    .hidden-blessing-meta {
+      display: block;
+      margin-bottom: 6px;
+      color: rgba(255, 239, 252, .58);
+      font-size: 12px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 80;
+      background: rgba(55, 29, 80, .58);
+      padding: 20px;
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-panel {
+      width: min(620px, 100%);
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      background: rgba(121, 70, 139, .72);
+      border: 1px solid rgba(255, 250, 255, .36);
+      border-radius: 24px;
+      color: var(--ink);
+      padding: 24px;
+      box-shadow: 0 28px 90px rgba(55, 29, 80, .32);
+      backdrop-filter: blur(18px);
+      position: relative;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .detail-grid img {
+      width: 100%;
+      border: 1px solid rgba(255, 250, 255, .28);
+      border-radius: 12px;
+    }
+
+    .blessing {
+      text-align: center;
+      width: min(480px, 100%);
+      padding: 26px 24px;
+      background:
+        radial-gradient(circle at 50% 8%, rgba(255, 246, 253, .16), transparent 42%),
+        rgba(121, 70, 139, .68);
+    }
+
+    .blessing h2 {
+      position: relative;
+      display: inline-block;
+      color: rgba(255, 250, 255, .92);
+      font-size: clamp(25px, 2.6vw, 32px);
+      letter-spacing: .16em;
+      text-indent: .16em;
+    }
+
+    .blessing h2::after {
+      content: "✦";
+      position: absolute;
+      top: -4px;
+      right: -22px;
+      color: rgba(255, 244, 253, .7);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 15px;
+      text-indent: 0;
+      text-shadow: 0 0 14px rgba(255, 238, 252, .36);
+    }
+
+    .blessing p {
+      font-family: var(--font-hand);
+      font-size: 15px;
+      line-height: 1.8;
+      font-weight: 300;
+      color: var(--ink-light);
+    }
+
+    #blessingIntro {
+      position: relative;
+      z-index: 5;
+      margin: 12px 0 0;
+    }
+
+    .gift-scene {
+      position: relative;
+      width: 172px;
+      height: 142px;
+      margin: 52px auto 8px;
+    }
+
+    .gift-box {
+      position: relative;
+      width: 124px;
+      height: 112px;
+      margin: 28px auto 24px;
+      filter: drop-shadow(0 18px 22px rgba(42, 22, 62, .24));
+    }
+
+    .gift-box::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -6px;
+      width: 102px;
+      height: 14px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: radial-gradient(ellipse, rgba(48, 22, 66, .18), transparent 68%);
+      z-index: 0;
+    }
+
+    .gift-lid {
+      position: absolute;
+      left: 50%;
+      top: 8px;
+      width: 136px;
+      height: 36px;
+      transform: translateX(-50%);
+      transform-origin: 50% 85%;
+      border: 1px solid rgba(255, 255, 255, .48);
+      border-radius: 14px 14px 10px 10px;
+      background:
+        radial-gradient(circle at 24% 22%, rgba(255, 255, 255, .28), transparent 38%),
+        linear-gradient(135deg, #f2b4dd 0%, #d98dcb 55%, #c276bd 100%);
+      box-shadow:
+        inset 0 0 16px rgba(255, 255, 255, .22),
+        0 8px 18px rgba(60, 30, 80, .18);
+      transition: transform 900ms cubic-bezier(.2, .8, .2, 1), opacity 500ms ease;
+      z-index: 3;
+    }
+
+    .gift-box.opened .gift-lid {
+      transform: translateX(-50%) translateY(-30px) rotate(-9deg);
+    }
+
+    .gift-body {
+      position: absolute;
+      left: 50%;
+      bottom: 4px;
+      width: 112px;
+      height: 72px;
+      transform: translateX(-50%);
+      border: 1px solid rgba(255, 255, 255, .45);
+      border-radius: 18px 18px 16px 16px;
+      background:
+        radial-gradient(circle at 28% 18%, rgba(255, 255, 255, .24), transparent 42%),
+        linear-gradient(160deg, #e7a0d6 0%, #d488ca 48%, #b86caf 100%);
+      box-shadow:
+        inset 0 0 18px rgba(255, 255, 255, .18),
+        0 12px 22px rgba(48, 24, 68, .2);
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .gift-lid::after,
+    .gift-body::after {
+      content: "";
+      position: absolute;
+      inset: 8px 10px;
+      border: 1px solid rgba(255, 255, 255, .12);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .gift-lid-ribbon,
+    .gift-body-ribbon-vertical,
+    .gift-body-ribbon-horizontal {
+      position: absolute;
+      background: rgba(255, 255, 255, .28);
+      box-shadow: inset 0 0 8px rgba(255, 255, 255, .25);
+    }
+
+    .gift-lid-ribbon {
+      left: 50%;
+      top: 0;
+      width: 16px;
+      height: 100%;
+      transform: translateX(-50%);
+      border-radius: 999px;
+    }
+
+    .gift-body-ribbon-vertical {
+      left: 50%;
+      top: 0;
+      width: 16px;
+      height: 100%;
+      transform: translateX(-50%);
+      border-radius: 999px;
+    }
+
+    .gift-body-ribbon-horizontal {
+      left: 10px;
+      right: 10px;
+      top: 18px;
+      height: 14px;
+      border-radius: 999px;
+    }
+
+    .gift-bow {
+      position: absolute;
+      left: 50%;
+      top: -18px;
+      width: 62px;
+      height: 30px;
+      transform: translateX(-50%);
+      z-index: 4;
+    }
+
+    .bow-left,
+    .bow-right {
+      position: absolute;
+      top: 6px;
+      width: 28px;
+      height: 20px;
+      border: 1px solid rgba(255, 255, 255, .5);
+      border-radius: 50% 50% 45% 45%;
+      background: linear-gradient(135deg, rgba(255, 230, 246, .9), rgba(230, 150, 215, .85));
+      box-shadow: inset 0 0 8px rgba(255, 255, 255, .22);
+    }
+
+    .bow-left {
+      left: 2px;
+      transform: rotate(-22deg);
+    }
+
+    .bow-right {
+      right: 2px;
+      transform: rotate(22deg);
+    }
+
+    .bow-knot {
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      width: 14px;
+      height: 14px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: rgba(255, 245, 252, .92);
+      box-shadow: 0 0 10px rgba(255, 255, 255, .35);
+    }
+
+    .gift-stars {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .gift-stars span {
+      position: absolute;
+      left: 50%;
+      top: 54px;
+      opacity: 0;
+      color: rgba(255, 255, 255, .88);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 15px;
+    }
+
+    .gift-stars span:nth-child(2) {
+      font-size: 18px;
+    }
+
+    .blessing-note {
+      display: none;
+      margin: 12px auto 0;
+      max-width: 386px;
+      padding: 16px 18px 17px;
+      border: 1px solid rgba(255, 250, 255, .58);
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 16% 10%, rgba(255, 255, 255, .48), transparent 44%),
+        linear-gradient(160deg, rgba(255, 250, 254, .78), rgba(255, 232, 249, .64));
+      box-shadow: inset 0 0 20px rgba(255, 255, 255, .22), 0 18px 42px rgba(74, 35, 96, .18);
+      backdrop-filter: blur(14px);
+      text-align: left;
+    }
+
+    .blessing-note .kicker {
+      margin-bottom: 9px;
+      font-size: 14px;
+      text-align: center;
+      color: rgba(100, 55, 124, .72);
+    }
+
+    .blessing-note p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.85;
+      font-style: normal;
+      white-space: pre-line;
+      color: rgba(74, 38, 96, .88);
+    }
+
+    .blessing-actions {
+      margin-top: 18px;
+      gap: 10px;
+    }
+
+    .blessing-actions .btn {
+      min-width: 132px;
+      min-height: 40px;
+      padding: 8px 18px;
+      border-color: rgba(255, 250, 255, .42);
+      background: rgba(255, 238, 252, .1);
+      font-size: 16px;
+      letter-spacing: .12em;
+      box-shadow: inset 0 0 16px rgba(255, 250, 255, .04);
+    }
+
+    .blessing-actions .btn.primary {
+      border-color: rgba(255, 250, 255, .62);
+      background: rgba(255, 235, 250, .18);
+      box-shadow: 0 0 24px rgba(255, 232, 250, .12), inset 0 0 16px rgba(255, 250, 255, .06);
+    }
+
+    .blessing.is-opened .blessing-actions {
+      justify-content: center;
+    }
+
+    .blessing-actions .btn:disabled {
+      cursor: default;
+      opacity: .72;
+      transform: none;
+      box-shadow: inset 0 0 16px rgba(255, 250, 255, .04);
+    }
+
+    .gift-box.opened .gift-stars span:nth-child(1) {
+      animation: giftStarUp1 900ms ease-out 260ms forwards;
+    }
+
+    .gift-box.opened .gift-stars span:nth-child(2) {
+      animation: giftStarUp2 980ms ease-out 320ms forwards;
+    }
+
+    .gift-box.opened .gift-stars span:nth-child(3) {
+      animation: giftStarUp3 880ms ease-out 380ms forwards;
+    }
+
+    .blessing.is-opened .blessing-note {
+      display: block;
+      animation: blessingNoteIn .45s ease .9s both;
+    }
+
+    @keyframes pageIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fall {
+      from { transform: translate3d(0, -18vh, 0) rotate(0deg); }
+      to { transform: translate3d(22px, 118vh, 0) rotate(220deg); }
+    }
+
+    @keyframes moonDrift {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-14px, 10px); }
+    }
+
+    @keyframes meteor {
+      0%, 68% { opacity: 0; transform: translate(0, 0) rotate(-28deg); }
+      72% { opacity: .9; }
+      80%, 100% { opacity: 0; transform: translate(-240px, 120px) rotate(-28deg); }
+    }
+
+    @keyframes settle {
+      from { opacity: 0; transform: translateY(-12px) scale(.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes pulseAura {
+      0%, 100% { opacity: .55; transform: scale(.96); }
+      50% { opacity: .9; transform: scale(1.04); }
+    }
+
+    @keyframes galleryCardIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes giftStarUp1 {
+      from { opacity: 0; transform: translate(-50%, 0) scale(.7); }
+      42% { opacity: .95; }
+      to { opacity: 1; transform: translate(-82px, -58px) scale(1); }
+    }
+
+    @keyframes giftStarUp2 {
+      from { opacity: 0; transform: translate(-50%, 0) scale(.7); }
+      42% { opacity: .95; }
+      to { opacity: 1; transform: translate(-50%, -72px) scale(1.08); }
+    }
+
+    @keyframes giftStarUp3 {
+      0% { opacity: 0; transform: translate(-50%, 0) scale(.7); }
+      42% { opacity: .95; }
+      100% { opacity: 1; transform: translate(48px, -56px) scale(1); }
+    }
+
+    @keyframes blessingNoteIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 760px) {
+      .app { padding: 14px 12px; }
+      .page {
+        min-height: calc(100vh - 28px);
+        max-height: calc(100vh - 28px);
+      }
+      .frame { padding: 18px 12px; }
+      .frame.center::before {
+        margin-bottom: 18px;
+        font-size: 38px;
+      }
+      #questionPage .frame.center::before,
+      #dailyPage .frame.center::before,
+      #galleryPage .frame.center::before,
+      #historyPage .frame.center::before {
+        margin-bottom: 10px;
+        font-size: 30px;
+      }
+      .kicker { font-size: 16px; }
+      #passwordPage h1::before { font-size: 48px; }
+      h1 {
+        font-size: 18px;
+        letter-spacing: .42em;
+        text-indent: .42em;
+      }
+      h2 {
+        font-size: 26px;
+        letter-spacing: .16em;
+        text-indent: .16em;
+      }
+      .brand-title {
+        letter-spacing: .08em;
+        text-indent: 0;
+      }
+      .brand-title .kana {
+        margin: 0 .05em;
+      }
+      .home-copy {
+        max-width: 300px;
+        font-size: 15px;
+        letter-spacing: .04em;
+        line-height: 1.9;
+      }
+      #questionPage h2,
+      #dailyPage h2,
+      #galleryPage h2,
+      #historyPage h2,
+      #readingPage h2 {
+        font-size: 24px;
+      }
+      .note {
+        font-size: 16px;
+        line-height: 1.75;
+        max-width: 320px;
+      }
+      .divider { margin: 10px 0; }
+      .actions {
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .btn {
+        min-height: 40px;
+        padding: 8px 18px;
+        font-size: 16px;
+        letter-spacing: .12em;
+      }
+      input, textarea {
+        border-radius: 18px;
+        padding: 11px 14px;
+      }
+      textarea { min-height: 90px; }
+      .spread-options {
+        gap: 10px;
+        margin: 14px auto 10px;
+      }
+      .spread-card { padding: 12px; }
+      .spread-card strong { font-size: 15px; }
+      .spread-card span { font-size: 12px; }
+      .spread-options, .reading-layout, .detail-grid {
+        grid-template-columns: 1fr;
+      }
+      .draw-header {
+        display: block;
+        text-align: center;
+      }
+      .draw-header h2 { font-size: 28px; }
+      .question-ribbon {
+        margin: 10px auto 0;
+        text-align: center;
+        font-size: 14px;
+      }
+      .draw-stage {
+        min-height: calc(100vh - 28px);
+        gap: 10px;
+        grid-template-rows: auto auto minmax(330px, 1fr) auto;
+      }
+      .arc-wrap { min-height: 330px; }
+      .chosen-row { min-height: 148px; }
+      .slot { width: clamp(84px, 25vw, 112px); }
+      .slot-label { font-size: 11px; }
+      .draw-card { width: clamp(82px, 26vw, 112px); }
+      .arc {
+        gap: 14px;
+        padding: 76px 26px 82px;
+      }
+      .reading-layout {
+        gap: 14px;
+      }
+      .reading-cards {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+      .reading-card {
+        width: min(98px, 28vw);
+        padding: 6px;
+      }
+      .reading-card.compact {
+        width: min(92px, 27vw);
+      }
+      .reading-card p { font-size: 11px; }
+      .typewriter {
+        min-height: 0;
+        max-height: none;
+        font-size: 14px;
+        line-height: 1.85;
+      }
+      #dailyPage .frame {
+        padding-top: 14px;
+      }
+      #dailyPage .frame.center::before {
+        font-size: 26px;
+      }
+      #dailyContent .daily-card {
+        width: min(104px, 30vw);
+      }
+      #dailyContent .daily-reading {
+        max-width: 92vw;
+        font-size: 14px;
+        line-height: 1.75;
+      }
+      #dailyContent .daily-keyword {
+        max-width: 88vw;
+        font-size: 13px;
+      }
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+        gap: 14px;
+        max-height: 52vh;
+      }
+      .mini-card { padding: 8px; }
+      .mini-card .card-name { font-size: 12px; }
+      .mini-card .card-en { font-size: 11px; }
+      .history-list { max-height: 55vh; }
+      .modal-panel { padding: 18px; }
+      .moon {
+        top: 86px;
+        right: 18px;
+        width: 68px;
+        height: 68px;
+        opacity: .5;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sky-layer" aria-hidden="true">
+    <div class="moon"></div>
+    <div class="shooting-star"></div>
+    <span class="star">✦</span><span class="star">✧</span><span class="star">·</span><span class="star">☾</span><span class="star">✦</span><span class="star">✧</span><span class="star">·</span>
+  </div>
+
+  <main class="app">
+    <section class="page active" id="passwordPage">
+      <div class="frame center">
+        <div class="kicker">A small door under the moon</div>
+        <h1 class="brand-title">安<span class="kana">の</span>晴夜预言</h1>
+        <div class="divider">── ✦ ☾ ✦ ──</div>
+        <p class="note">输入暗号，来安的专属占星室坐坐吧。</p>
+        <div class="actions">
+          <input id="passwordInput" type="password" inputmode="numeric" autocomplete="off" placeholder="暗号" aria-label="暗号">
+        </div>
+        <div class="field-error" id="passwordError"></div>
+        <div class="actions">
+          <button class="btn primary" id="passwordButton">~ 打开信笺 ~</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="welcomePage">
+      <div class="frame center">
+        <div class="kicker">For Peiqing, who carries her own starlight</div>
+        <h2 class="brand-title">安<span class="kana">の</span>晴夜预言</h2>
+        <div class="divider">── ✦ ☾ ✦ ──</div>
+        <p class="note home-copy">这里是安的占星室，<span class="second-line">—— 一个让心事放晴的地方。</span></p>
+        <div class="actions">
+          <button class="btn primary" data-go="questionPage">~ 开始占卜 ~</button>
+          <button class="btn" id="dailyButton">~ 每日一牌 ~</button>
+          <button class="btn" data-go="galleryPage">~ 塔罗图鉴 ~</button>
+          <button class="btn" data-go="historyPage">~ 历史记录 ~</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="questionPage">
+      <div class="frame center">
+        <div class="kicker">Ask softly, choose honestly</div>
+        <h2>在答案到来之前，先看见自己</h2>
+        <div class="spread-options" aria-label="牌阵选择">
+          <button class="spread-card active" data-spread="1">
+            <strong>单牌</strong>
+            <span>适合一个清晰问题，给出当下最需要听见的提醒。</span>
+          </button>
+          <button class="spread-card" data-spread="3">
+            <strong>三牌</strong>
+            <span>过去、现在、未来；也可读作原因、状态、建议。</span>
+          </button>
+        </div>
+        <textarea id="questionInput" placeholder="写下此刻最想问的问题。" aria-label="问题"></textarea>
+        <div class="field-error" id="questionError"></div>
+        <div class="actions">
+          <button class="btn" data-go="welcomePage">~ 返回 ~</button>
+          <button class="btn primary" id="beginDrawButton">~ 洗牌入夜 ~</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="drawPage">
+      <div class="draw-stage">
+        <header class="draw-header">
+          <div>
+            <div class="kicker">Trust your intuition</div>
+            <h2>选择你的牌</h2>
+          </div>
+          <div class="question-ribbon" id="drawQuestion"></div>
+        </header>
+        <div class="chosen-row" id="chosenRow"></div>
+        <div class="arc-wrap" id="arcWrap">
+          <div class="arc" id="arc"></div>
+        </div>
+        <div class="arc-controls">
+          <button class="btn icon-btn" id="prevSegment" aria-label="上一段">‹</button>
+          <span class="segment-label" id="segmentLabel"></span>
+          <button class="btn icon-btn" id="nextSegment" aria-label="下一段">›</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="readingPage">
+      <div class="frame">
+        <div class="reading-layout">
+          <div class="reading-cards" id="readingCards"></div>
+          <div>
+            <div class="kicker">The cards have answered</div>
+            <h2>月光里的回信</h2>
+            <div class="divider">── ✦ ☾ ✦ ──</div>
+            <div class="typewriter" id="readingText"></div>
+            <div class="actions">
+              <button class="btn" data-go="welcomePage">~ 回到首页 ~</button>
+              <button class="btn primary" data-go="questionPage">~ 再问一次 ~</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="dailyPage">
+      <div class="frame center">
+        <div class="kicker">One card for today</div>
+        <h2>今日之牌</h2>
+        <div class="divider">── ✦ ☾ ✦ ──</div>
+        <div id="dailyContent"></div>
+        <div class="actions">
+          <button class="btn" data-go="welcomePage">~ 返回 ~</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="galleryPage">
+      <div class="frame">
+        <div class="center">
+          <div class="kicker">The full deck</div>
+          <h2>塔罗图鉴</h2>
+          <div class="tabs" id="galleryTabs"></div>
+        </div>
+        <div class="gallery-grid" id="galleryGrid"></div>
+        <div class="actions">
+          <button class="btn" data-go="welcomePage">~ 返回 ~</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="historyPage">
+      <div class="frame">
+        <div class="center">
+          <div class="kicker">Letters already received</div>
+          <h2>历史记录</h2>
+        </div>
+        <div class="history-list" id="historyList"></div>
+        <div class="actions">
+          <button class="btn" id="clearHistory">~ 清空记录 ~</button>
+          <button class="btn" data-go="welcomePage">~ 返回 ~</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="modal" id="detailModal" role="dialog" aria-modal="true">
+    <div class="modal-panel">
+      <div id="detailContent"></div>
+      <div class="actions">
+        <button class="btn primary" id="closeDetail">~ 收起 ~</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="blessingModal" role="dialog" aria-modal="true">
+    <div class="modal-panel blessing">
+      <div class="kicker">A hidden note</div>
+      <h2>隐藏彩蛋</h2>
+      <p id="blessingIntro">你发现了一份藏起来的小礼物。</p>
+      <div class="gift-scene" aria-hidden="true">
+        <div class="gift-box" id="giftBox">
+          <div class="gift-lid">
+            <div class="gift-bow">
+              <span class="bow-left"></span>
+              <span class="bow-right"></span>
+              <span class="bow-knot"></span>
+            </div>
+            <div class="gift-lid-ribbon"></div>
+          </div>
+          <div class="gift-body">
+            <div class="gift-body-ribbon-vertical"></div>
+            <div class="gift-body-ribbon-horizontal"></div>
+          </div>
+          <div class="gift-stars">
+            <span>✦</span>
+            <span>✧</span>
+            <span>✦</span>
+          </div>
+        </div>
+      </div>
+      <div class="blessing-note" id="blessingNote">
+        <div class="kicker">写给安的一张小纸条</div>
+        <p id="blessingText"></p>
+      </div>
+      <div class="actions blessing-actions">
+        <button class="btn primary" id="openBlessingGift">~ 拆开礼物 ~</button>
+        <button class="btn" id="closeBlessing">~ 收起 ~</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const PASSWORD = "0614";
+    const SUITS = {
+      Major: "大阿卡纳",
+      Wands: "权杖",
+      Cups: "圣杯",
+      Swords: "宝剑",
+      Pentacles: "星币"
+    };
+
+    const tarotDeck = [
+      { numeral: 0, name: "愚者", en: "The Fool", suit: "Major", file: "The Fool (Rider-Waite Smith tarot deck).png", upright: "新的开始，自由探险，信任未知", reversed: "轻率冒险，犹豫不前，重新考虑" },
+      { numeral: 1, name: "魔术师", en: "The Magician", suit: "Major", file: "The Magician (Rider-Waite Smith tarot deck).png", upright: "资源齐备，主动创造，表达意志", reversed: "能量分散，言行不一，时机未稳" },
+      { numeral: 2, name: "女祭司", en: "The High Priestess", suit: "Major", file: "The High Priestess (Rider-Waite Smith tarot deck).png", upright: "直觉，秘密，内在智慧", reversed: "忽略直觉，信息遮蔽，过度沉默" },
+      { numeral: 3, name: "皇后", en: "The Empress", suit: "Major", file: "The Empress (Rider-Waite Smith tarot deck).png", upright: "滋养，丰盛，温柔生长", reversed: "消耗自己，过度照顾，创造受阻" },
+      { numeral: 4, name: "皇帝", en: "The Emperor", suit: "Major", file: "The Emperor (Rider-Waite Smith tarot deck).png", upright: "秩序，责任，建立边界", reversed: "控制过度，僵硬，权威失衡" },
+      { numeral: 5, name: "教皇", en: "The Hierophant", suit: "Major", file: "The Hierophant (Rider-Waite Smith tarot deck).png", upright: "传统，学习，精神指引", reversed: "打破框架，不盲从，寻找个人答案" },
+      { numeral: 6, name: "恋人", en: "The Lovers", suit: "Major", file: "The Lovers (Rider-Waite Smith tarot deck).png", upright: "选择，连结，价值一致", reversed: "摇摆，沟通断裂，关系失衡" },
+      { numeral: 7, name: "战车", en: "The Chariot", suit: "Major", file: "The Chariot (Rider-Waite Smith tarot deck).png", upright: "意志，推进，掌控方向", reversed: "拉扯，失速，目标不清" },
+      { numeral: 8, name: "力量", en: "Strength", suit: "Major", file: "Strength (Rider-Waite Smith tarot deck).png", upright: "温柔勇气，耐心，内在力量", reversed: "自我怀疑，疲惫，强撑" },
+      { numeral: 9, name: "隐者", en: "The Hermit", suit: "Major", file: "The Hermit (Rider-Waite Smith tarot deck).png", upright: "独处，寻找真相，沉淀", reversed: "孤立，逃避求助，困在内耗" },
+      { numeral: 10, name: "命运之轮", en: "Wheel of Fortune", suit: "Major", file: "Wheel of Fortune (Rider-Waite Smith tarot deck).png", upright: "转机，周期，顺势而动", reversed: "反复，抗拒变化，节奏紊乱" },
+      { numeral: 11, name: "正义", en: "Justice", suit: "Major", file: "Justice (Rider-Waite Smith tarot deck).png", upright: "公平，真相，理性判断", reversed: "偏见，逃避责任，尚未定论" },
+      { numeral: 12, name: "倒吊人", en: "The Hanged Man", suit: "Major", file: "The Hanged Man (Rider-Waite Smith tarot deck).png", upright: "暂停，换角度，必要等待", reversed: "无谓牺牲，拖延，卡住" },
+      { numeral: 13, name: "死神", en: "Death", suit: "Major", file: "Death (Rider-Waite Smith tarot deck).png", upright: "结束，蜕变，旧事清场", reversed: "害怕放手，改变延迟，旧模式复燃" },
+      { numeral: 14, name: "节制", en: "Temperance", suit: "Major", file: "Temperance (Rider-Waite Smith tarot deck).png", upright: "调和，疗愈，找到比例", reversed: "失衡，急躁，消耗过快" },
+      { numeral: 15, name: "恶魔", en: "The Devil", suit: "Major", file: "The Devil (Rider-Waite Smith tarot deck).png", upright: "执念，诱惑，被束缚的欲望", reversed: "看见枷锁，松绑，重获自由" },
+      { numeral: 16, name: "高塔", en: "The Tower", suit: "Major", file: "The Tower (Rider-Waite Smith tarot deck).png", upright: "突变，真相击破，重建", reversed: "余震，抗拒崩塌，慢性改变" },
+      { numeral: 17, name: "星星", en: "The Star", suit: "Major", file: "The Star (Rider-Waite Smith tarot deck).png", upright: "希望，祝福，重新相信", reversed: "信心微弱，愿望延迟，需要休息" },
+      { numeral: 18, name: "月亮", en: "The Moon", suit: "Major", file: "The Moon (Rider-Waite Smith tarot deck).png", upright: "潜意识，梦，雾中前行", reversed: "迷雾散开，焦虑浮现，真相靠近" },
+      { numeral: 19, name: "太阳", en: "The Sun", suit: "Major", file: "The Sun (Rider-Waite Smith tarot deck).png", upright: "明朗，喜悦，坦然被看见", reversed: "快乐打折，暂时阴影，能量回升中" },
+      { numeral: 20, name: "审判", en: "Judgement", suit: "Major", file: "Judgement (Rider-Waite Smith tarot deck).png", upright: "召唤，觉醒，重新选择", reversed: "自我批判，迟疑，害怕回应" },
+      { numeral: 21, name: "世界", en: "The World", suit: "Major", file: "The World (Rider-Waite Smith tarot deck).png", upright: "完成，整合，抵达新阶段", reversed: "尚差一步，收尾拖延，循环未闭" },
+
+      { numeral: 1, name: "权杖一", en: "Ace of Wands", suit: "Wands", file: "Ace of Wands (Rider-Waite Smith tarot deck).png", upright: "灵感点燃，行动开端，热情", reversed: "热度不足，计划延后，冲劲受阻" },
+      { numeral: 2, name: "权杖二", en: "Two of Wands", suit: "Wands", file: "Two of Wands (Rider-Waite Smith tarot deck).png", upright: "规划远方，选择路线，扩大视野", reversed: "不敢迈步，计划摇摆，视野受限" },
+      { numeral: 3, name: "权杖三", en: "Three of Wands", suit: "Wands", file: "Three of Wands (Rider-Waite Smith tarot deck).png", upright: "等待回音，拓展，长期布局", reversed: "延误，合作不稳，期待落空" },
+      { numeral: 4, name: "权杖四", en: "Four of Wands", suit: "Wands", file: "Four of Wands (Rider-Waite Smith tarot deck).png", upright: "庆祝，稳定关系，阶段成果", reversed: "归属感不足，仪式延迟，基础松动" },
+      { numeral: 5, name: "权杖五", en: "Five of Wands", suit: "Wands", file: "Five of Wands (Rider-Waite Smith tarot deck).png", upright: "竞争，磨合，观点碰撞", reversed: "内耗减少，避开冲突，暗中较劲" },
+      { numeral: 6, name: "权杖六", en: "Six of Wands", suit: "Wands", file: "Six of Wands (Rider-Waite Smith tarot deck).png", upright: "胜利，被认可，抬头向前", reversed: "认可延迟，过度在意评价，信心晃动" },
+      { numeral: 7, name: "权杖七", en: "Seven of Wands", suit: "Wands", file: "Seven of Wands (Rider-Waite Smith tarot deck).png", upright: "守住立场，迎战，保护成果", reversed: "防备过度，压力过载，想要退缩" },
+      { numeral: 8, name: "权杖八", en: "Eight of Wands", suit: "Wands", file: "Eight of Wands (Rider-Waite Smith tarot deck).png", upright: "快速推进，消息抵达，节奏加速", reversed: "延迟，沟通堵塞，速度失控" },
+      { numeral: 9, name: "权杖九", en: "Nine of Wands", suit: "Wands", file: "Nine of Wands (Rider-Waite Smith tarot deck).png", upright: "坚持，警觉，最后一道防线", reversed: "疲惫，创伤反应，不必独自硬撑" },
+      { numeral: 10, name: "权杖十", en: "Ten of Wands", suit: "Wands", file: "Ten of Wands (Rider-Waite Smith tarot deck).png", upright: "负担，责任过重，接近终点", reversed: "卸下重担，分工，停止逞强" },
+      { numeral: 11, name: "权杖侍从", en: "Page of Wands", suit: "Wands", file: "Page of Wands (Rider-Waite Smith tarot deck).png", upright: "好奇，消息，尝试新方向", reversed: "三分钟热度，消息未定，经验不足" },
+      { numeral: 12, name: "权杖骑士", en: "Knight of Wands", suit: "Wands", file: "Knight of Wands (Rider-Waite Smith tarot deck).png", upright: "热烈行动，冒险，奔赴", reversed: "冲动，来得快去得快，节奏莽撞" },
+      { numeral: 13, name: "权杖王后", en: "Queen of Wands", suit: "Wands", file: "Queen of Wands (Rider-Waite Smith tarot deck).png", upright: "自信，魅力，温暖领导", reversed: "自我怀疑，嫉妒，光芒收敛" },
+      { numeral: 14, name: "权杖国王", en: "King of Wands", suit: "Wands", file: "King of Wands (Rider-Waite Smith tarot deck).png", upright: "愿景，掌舵，成熟行动力", reversed: "专断，急躁，愿景压人" },
+
+      { numeral: 1, name: "圣杯一", en: "Ace of Cups", suit: "Cups", file: "Ace of Cups (Rider-Waite Smith tarot deck).png", upright: "情感开启，柔软，心流", reversed: "情绪堵住，爱意内收，需要自我照顾" },
+      { numeral: 2, name: "圣杯二", en: "Two of Cups", suit: "Cups", file: "Two of Cups (Rider-Waite Smith tarot deck).png", upright: "互相靠近，默契，平等连结", reversed: "误会，关系失衡，无法对频" },
+      { numeral: 3, name: "圣杯三", en: "Three of Cups", suit: "Cups", file: "Three of Cups (Rider-Waite Smith tarot deck).png", upright: "友情，庆祝，情感支持", reversed: "社交疲惫，小圈摩擦，快乐过量" },
+      { numeral: 4, name: "圣杯四", en: "Four of Cups", suit: "Cups", file: "Four of Cups (Rider-Waite Smith tarot deck).png", upright: "倦怠，重新审视，不急着接受", reversed: "心门重开，看见新机会，走出停滞" },
+      { numeral: 5, name: "圣杯五", en: "Five of Cups", suit: "Cups", file: "Five of Cups (Rider-Waite Smith tarot deck).png", upright: "失落，遗憾，仍有未失去之物", reversed: "释怀，回头看见支持，复原" },
+      { numeral: 6, name: "圣杯六", en: "Six of Cups", suit: "Cups", file: "Six of Cups (Rider-Waite Smith tarot deck).png", upright: "回忆，纯真，旧人旧事", reversed: "走出过去，怀旧过度，旧模式" },
+      { numeral: 7, name: "圣杯七", en: "Seven of Cups", suit: "Cups", file: "Seven of Cups (Rider-Waite Smith tarot deck).png", upright: "选择很多，幻想，诱人的可能", reversed: "落地选择，看清幻象，聚焦" },
+      { numeral: 8, name: "圣杯八", en: "Eight of Cups", suit: "Cups", file: "Eight of Cups (Rider-Waite Smith tarot deck).png", upright: "离开，追寻更深意义，告别", reversed: "不舍离开，回头，情感拉扯" },
+      { numeral: 9, name: "圣杯九", en: "Nine of Cups", suit: "Cups", file: "Nine of Cups (Rider-Waite Smith tarot deck).png", upright: "愿望实现，满足，享受成果", reversed: "表面满足，空心愿望，贪多" },
+      { numeral: 10, name: "圣杯十", en: "Ten of Cups", suit: "Cups", file: "Ten of Cups (Rider-Waite Smith tarot deck).png", upright: "圆满，家庭感，情感归宿", reversed: "期待落差，关系需修复，理想化" },
+      { numeral: 11, name: "圣杯侍从", en: "Page of Cups", suit: "Cups", file: "Page of Cups (Rider-Waite Smith tarot deck).png", upright: "心动，创意消息，柔软表达", reversed: "情绪幼嫩，不敢表达，敏感" },
+      { numeral: 12, name: "圣杯骑士", en: "Knight of Cups", suit: "Cups", file: "Knight of Cups (Rider-Waite Smith tarot deck).png", upright: "浪漫邀约，理想，温柔行动", reversed: "承诺飘忽，情绪化，过度想象" },
+      { numeral: 13, name: "圣杯王后", en: "Queen of Cups", suit: "Cups", file: "Queen of Cups (Rider-Waite Smith tarot deck).png", upright: "共情，直觉，情绪容器", reversed: "情绪漫溢，界限薄，照顾过度" },
+      { numeral: 14, name: "圣杯国王", en: "King of Cups", suit: "Cups", file: "King of Cups (Rider-Waite Smith tarot deck).png", upright: "成熟情感，稳定，温和掌舵", reversed: "压抑情绪，冷处理，情感操控" },
+
+      { numeral: 1, name: "宝剑一", en: "Ace of Swords", suit: "Swords", file: "One of Swords (Rider-Waite Smith tarot deck).png", upright: "清晰，真相，切开混乱", reversed: "误判，沟通不明，想法打结" },
+      { numeral: 2, name: "宝剑二", en: "Two of Swords", suit: "Swords", file: "Two of Swords (Rider-Waite Smith tarot deck).png", upright: "僵持，暂不选择，理智防线", reversed: "逃避失效，被迫决定，信息涌入" },
+      { numeral: 3, name: "宝剑三", en: "Three of Swords", suit: "Swords", file: "Three of Swords (Rider-Waite Smith tarot deck).png", upright: "心痛，真相刺破，必要悲伤", reversed: "疗伤，拔出旧刺，慢慢原谅" },
+      { numeral: 4, name: "宝剑四", en: "Four of Swords", suit: "Swords", file: "Four of Swords (Rider-Waite Smith tarot deck).png", upright: "休息，暂停思考，恢复", reversed: "休息不足，焦虑回潮，重新启动" },
+      { numeral: 5, name: "宝剑五", en: "Five of Swords", suit: "Swords", file: "Five of Swords (Rider-Waite Smith tarot deck).png", upright: "争执，赢了也累，关系代价", reversed: "停战，放下面子，修复可能" },
+      { numeral: 6, name: "宝剑六", en: "Six of Swords", suit: "Swords", file: "Six of Swords (Rider-Waite Smith tarot deck).png", upright: "过渡，离开风暴，缓慢变好", reversed: "难以离岸，旧问题回流，旅程延迟" },
+      { numeral: 7, name: "宝剑七", en: "Seven of Swords", suit: "Swords", file: "Seven of Swords (Rider-Waite Smith tarot deck).png", upright: "策略，保留，绕路行事", reversed: "秘密暴露，自欺停止，坦白" },
+      { numeral: 8, name: "宝剑八", en: "Eight of Swords", suit: "Swords", file: "Eight of Swords (Rider-Waite Smith tarot deck).png", upright: "受困，限制性信念，看不见出口", reversed: "松绑，走出恐惧，选择权回来" },
+      { numeral: 9, name: "宝剑九", en: "Nine of Swords", suit: "Swords", file: "Nine of Swords (Rider-Waite Smith tarot deck).png", upright: "焦虑，失眠，自责", reversed: "压力释放，求助，黑夜将过" },
+      { numeral: 10, name: "宝剑十", en: "Ten of Swords", suit: "Swords", file: "Ten of Swords (Rider-Waite Smith tarot deck).png", upright: "结束到底，痛感清晰，黎明前", reversed: "复原，最坏已过，拒绝重演" },
+      { numeral: 11, name: "宝剑侍从", en: "Page of Swords", suit: "Swords", file: "Page of Swords (Rider-Waite Smith tarot deck).png", upright: "观察，学习，消息敏锐", reversed: "口舌，误解，过度窥探" },
+      { numeral: 12, name: "宝剑骑士", en: "Knight of Swords", suit: "Swords", file: "Knight of Swords (Rider-Waite Smith tarot deck).png", upright: "果断冲刺，直言，突破", reversed: "鲁莽，语气太硬，计划欠周" },
+      { numeral: 13, name: "宝剑王后", en: "Queen of Swords", suit: "Swords", file: "Queen of Swords (Rider-Waite Smith tarot deck).png", upright: "清醒，边界，理智温柔", reversed: "刻薄，防御过强，心软被藏起" },
+      { numeral: 14, name: "宝剑国王", en: "King of Swords", suit: "Swords", file: "King of Swords (Rider-Waite Smith tarot deck).png", upright: "判断，规则，冷静决策", reversed: "权威压迫，逻辑凌驾感受，偏执" },
+
+      { numeral: 1, name: "星币一", en: "Ace of Pentacles", suit: "Pentacles", file: "One of Pentacles (Rider-Waite Smith tarot deck).png", upright: "现实机会，种子，稳定开端", reversed: "机会延迟，资源未稳，落地不足" },
+      { numeral: 2, name: "星币二", en: "Two of Pentacles", suit: "Pentacles", file: "Two of Pentacles (Rider-Waite Smith tarot deck).png", upright: "平衡多线，弹性，调整节奏", reversed: "分身乏术，节奏混乱，财务压力" },
+      { numeral: 3, name: "星币三", en: "Three of Pentacles", suit: "Pentacles", file: "Three of Pentacles (Rider-Waite Smith tarot deck).png", upright: "协作，专业，被看见的能力", reversed: "配合不良，标准不一，价值被低估" },
+      { numeral: 4, name: "星币四", en: "Four of Pentacles", suit: "Pentacles", file: "Four of Pentacles (Rider-Waite Smith tarot deck).png", upright: "守住资源，安全感，谨慎", reversed: "放松掌控，过度吝惜，安全感松动" },
+      { numeral: 5, name: "星币五", en: "Five of Pentacles", suit: "Pentacles", file: "Five of Pentacles (Rider-Waite Smith tarot deck).png", upright: "匮乏，低谷，别独自受冻", reversed: "援助出现，慢慢回暖，走出贫瘠感" },
+      { numeral: 6, name: "星币六", en: "Six of Pentacles", suit: "Pentacles", file: "Six of Pentacles (Rider-Waite Smith tarot deck).png", upright: "给予与接受，公平资源，支持", reversed: "不平等交换，亏欠感，边界不清" },
+      { numeral: 7, name: "星币七", en: "Seven of Pentacles", suit: "Pentacles", file: "Seven of Pentacles (Rider-Waite Smith tarot deck).png", upright: "等待收成，评估，长期耐心", reversed: "急于结果，投入回报不明，想放弃" },
+      { numeral: 8, name: "星币八", en: "Eight of Pentacles", suit: "Pentacles", file: "Eight of Pentacles (Rider-Waite Smith tarot deck).png", upright: "练习，精进，踏实累积", reversed: "重复厌倦，技能瓶颈，完美主义" },
+      { numeral: 9, name: "星币九", en: "Nine of Pentacles", suit: "Pentacles", file: "Nine of Pentacles (Rider-Waite Smith tarot deck).png", upright: "独立，享受成果，优雅自足", reversed: "过度依赖，价值焦虑，享受有罪感" },
+      { numeral: 10, name: "星币十", en: "Ten of Pentacles", suit: "Pentacles", file: "Ten of Pentacles (Rider-Waite Smith tarot deck).png", upright: "长期稳定，家族资源，圆满积累", reversed: "传统压力，资源分配，根基需整理" },
+      { numeral: 11, name: "星币侍从", en: "Page of Pentacles", suit: "Pentacles", file: "Page of Pentacles (Rider-Waite Smith tarot deck).png", upright: "学习新技能，现实计划，认真开始", reversed: "拖延落地，兴趣不稳，经验不足" },
+      { numeral: 12, name: "星币骑士", en: "Knight of Pentacles", suit: "Pentacles", file: "Knight of Pentacles (Rider-Waite Smith tarot deck).png", upright: "可靠推进，耐心，长期主义", reversed: "停滞，过度保守，效率低" },
+      { numeral: 13, name: "星币王后", en: "Queen of Pentacles", suit: "Pentacles", file: "Queen of Pentacles (Rider-Waite Smith tarot deck).png", upright: "照料现实，丰盛，稳定温柔", reversed: "照顾过载，现实焦虑，忽略自己" },
+      { numeral: 14, name: "星币国王", en: "King of Pentacles", suit: "Pentacles", file: "King of Pentacles (Rider-Waite Smith tarot deck).png", upright: "成熟资源，安全感，长期成就", reversed: "固执，物质压力，安全感控制" }
+    ];
+
+    const state = {
+      spread: 1,
+      question: "",
+      drawDeck: [],
+      selected: [],
+      segment: 0,
+      animating: false,
+      gallerySuit: "Major",
+      currentGalleryCategory: "",
+      galleryRenderToken: 0,
+      galleryImagesPreloaded: false,
+      pendingBlessing: null,
+      blessingOpening: false
+    };
+
+    const FALLBACK_BLESSINGS = [
+      "你不必总是把自己写成旁白。某些时刻，你也可以站到故事中央。\n\n今天的小提醒是：别只问别人会不会选择你，也问问自己想不想选择这条路。",
+      "愿你拥有一间不必向任何人解释的房间，也拥有从房间里走出去的勇气。\n\n今天的小提醒是：先把自己安放好，再去回应世界。",
+      "一个人真正的自由，也许不是永远坚定，而是在摇晃的时候，依然允许自己说“我想试试”。\n\n今天的小提醒是：害怕不代表你不能出发，它只是提醒你慢一点。",
+      "不要把自己活成等待被确认的答案。你本身就可以是提问的人，也可以是作出选择的人。\n\n今天的小提醒是：把自己放回更重要的位置。",
+      "有些门不是为了等待别人打开的。你伸手的时候，它才会知道你已经准备好了。\n\n今天的小提醒是：你可以温柔，但不必总是退让。",
+      "风景不会替你决定方向，但它会提醒你：你并不是被困在原地的人。\n\n今天的小提醒是：下一次出发，不一定要盛大，只要更靠近你自己。",
+      "你可以明亮，也可以疲惫；可以热爱世界，也可以暂时不原谅它。\n\n今天的小提醒是：不要为了显得成熟，就把真实感受藏得太好。",
+      "不是所有答案都要立刻抵达。有些东西会在你重新相信自己的时候，慢慢显影。\n\n今天的小提醒是：给自己一点时间，也给选择一点空间。"
+    ];
+
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => [...document.querySelectorAll(selector)];
+    const cardSrc = (card) => `cards/${card.file.replace(/\.png$/, ".jpg")}`;
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    function preloadGalleryImages() {
+      if (state.galleryImagesPreloaded) return;
+      state.galleryImagesPreloaded = true;
+      const loaders = tarotDeck.map((card) => new Promise((resolve) => {
+        const image = new Image();
+        image.onload = resolve;
+        image.onerror = resolve;
+        image.src = cardSrc(card);
+      }));
+      Promise.all(loaders).then(() => {
+        console.log(`gallery images preloaded: ${tarotDeck.length}`);
+      });
+    }
+
+    function shuffleDeck() {
+      const copy = tarotDeck.map((card) => ({ ...card, isReversed: Math.random() < 0.5 }));
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy.map((card) => ({
+        ...card,
+        drawY: `${Math.round(Math.random() * 34 - 12)}px`,
+        drawR: `${(Math.random() * 10 - 5).toFixed(2)}deg`,
+        drawZ: `${Math.round(Math.random() * 18)}px`
+      }));
+    }
+
+    function go(pageId) {
+      $$(".page").forEach((page) => page.classList.toggle("active", page.id === pageId));
+      document.body.classList.toggle("night", pageId === "drawPage");
+      if (pageId === "galleryPage") renderGallery();
+      if (pageId === "historyPage") renderHistory();
+    }
+
+    function cardShell(card, flipped = false, extraClass = "") {
+      return `
+        <div class="card-shell ${flipped ? "flipped" : ""} ${card.isReversed ? "is-reversed" : ""} ${extraClass}">
+          <div class="card-back"></div>
+          <div class="card-face">
+            <img src="${cardSrc(card)}" alt="${card.name}">
+            <div class="card-title">${card.name}${card.isReversed ? " · 逆位" : " · 正位"}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderSlots() {
+      const labels = state.spread === 3 ? ["过去", "现在", "未来"] : ["此刻的答案"];
+      $("#chosenRow").innerHTML = labels.map((label, index) => {
+        const card = state.selected[index];
+        return `
+          <div class="slot" data-slot="${index}">
+            ${card ? `<div class="chosen-card ${card.isReversed ? "reversed" : ""}">${cardShell(card, true)}</div>` : "☾"}
+            <span class="slot-label">${label}</span>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderArc() {
+      const arc = $("#arc");
+      const scrollLeft = $("#arcWrap").scrollLeft;
+      arc.innerHTML = state.drawDeck.map((card, index) => {
+        return `
+          <button class="draw-card" style="--y:${card.drawY}; --r:${card.drawR}; --z:${card.drawZ}" data-index="${index}" aria-label="选择第${index + 1}张牌">
+            ${cardShell(card)}
+          </button>
+        `;
+      }).join("");
+      requestAnimationFrame(() => {
+        $("#arcWrap").scrollLeft = Math.min(scrollLeft, $("#arcWrap").scrollWidth);
+      });
+    }
+
+    async function selectCard(button) {
+      if (state.animating) return;
+      const index = Number(button.dataset.index);
+      const card = state.drawDeck[index];
+      const targetIndex = state.selected.length;
+      const slot = $(`.slot[data-slot="${targetIndex}"]`);
+      if (!card || !slot) return;
+
+      state.animating = true;
+      button.classList.add("is-leaving");
+      const from = button.getBoundingClientRect();
+      const to = slot.getBoundingClientRect();
+      const clone = document.createElement("div");
+      clone.className = "flight-card";
+      clone.innerHTML = cardShell(card);
+      clone.style.left = `${from.left}px`;
+      clone.style.top = `${from.top}px`;
+      clone.style.width = `${from.width}px`;
+      document.body.appendChild(clone);
+
+      state.drawDeck.splice(index, 1);
+      await wait(110);
+      renderArc();
+
+      const revealWidth = Math.min(
+        220,
+        Math.max(150, window.innerWidth * 0.22),
+        Math.max(132, (window.innerHeight - 190) / 1.5)
+      );
+      const revealHeight = revealWidth * 1.5;
+      const revealTop = Math.max(72, (window.innerHeight - revealHeight) / 2 - 8);
+      clone.style.left = `${window.innerWidth / 2 - revealWidth / 2}px`;
+      clone.style.top = `${revealTop}px`;
+      clone.style.width = `${revealWidth}px`;
+      clone.style.transform = "scale(1.06)";
+      clone.classList.add("pausing");
+      await wait(760);
+      clone.querySelector(".card-shell").classList.add("flipped");
+      await wait(1350);
+
+      clone.style.left = `${to.left}px`;
+      clone.style.top = `${to.top}px`;
+      clone.style.width = `${to.width}px`;
+      clone.style.transform = "scale(1)";
+      clone.classList.remove("pausing");
+      await wait(760);
+      await wait(120);
+
+      state.selected.push(card);
+      renderSlots();
+      clone.remove();
+      state.animating = false;
+
+      if (state.selected.length >= state.spread) {
+        await wait(620);
+        finishReading();
+      }
+    }
+
+    function beginDraw() {
+      const question = $("#questionInput").value.trim();
+      if (!question) {
+        $("#questionError").textContent = "请先写下一个问题。";
+        return;
+      }
+      $("#questionError").textContent = "";
+      state.question = question;
+      state.selected = [];
+      state.drawDeck = shuffleDeck();
+      state.segment = 0;
+      $("#drawQuestion").textContent = question;
+      renderSlots();
+      renderArc();
+      go("drawPage");
+      requestAnimationFrame(() => {
+        $("#arcWrap").scrollLeft = 0;
+      });
+    }
+
+    function detectTheme(question) {
+      if (/爱|恋|喜欢|关系|复合|他|她|感情|婚/.test(question)) return "love";
+      if (/工作|事业|钱|offer|项目|升职|面试|职业|学业|考试/.test(question)) return "work";
+      if (/未来|选择|方向|迷茫|怎么办|决定|焦虑/.test(question)) return "choice";
+      return "self";
+    }
+
+    function buildReading() {
+      const theme = detectTheme(state.question);
+      const themeLine = {
+        love: "这件事的重点，不只是对方怎么想，也包括你在这段关系里有没有被认真看见。",
+        work: "这件事需要同时看节奏、资源和下一步，不必急着把所有压力一次扛完。",
+        choice: "你真正想确认的，也许不是一个立刻落下来的答案，而是自己还有没有选择的空间。",
+        self: "这是一封写给当下心境的回信，它会先承认你的复杂，再慢慢指向可以落地的小事。"
+      }[theme];
+
+      const opening = `你问：“${state.question}”\n\n${themeLine} 对安沛晴来说，很多问题表面上是在问结果，里面却常常藏着一种更深的确认：我这样想合理吗？我是不是又把自己放得太靠后了？我还有没有权利慢慢选择，而不是立刻给所有人一个答案？`;
+      const body = state.selected.map((card, index) => {
+        const label = state.spread === 3 ? ["过去", "现在", "未来"][index] : "核心提示";
+        const meaning = card.isReversed ? card.reversed : card.upright;
+        const advice = card.isReversed
+          ? `这张牌逆位时，不是在否定你，而是在指出某个地方已经有点过度用力。它像是在提醒你：${meaning}。你可能太习惯先理解别人、先照顾局面、先替现实找理由，于是自己的感受被放到很后面。现在最需要的不是更用力地证明自己没事，而是先看见哪里已经让你累了。`
+          : `这张牌正位时，能量是比较顺的。它像是在提醒你：${meaning}。事情里已经有线索浮出来，只是它未必会用很响亮的方式出现。你可以先承认自己已经做到的部分，再顺着这点光做一个小动作，不必急着把全局一次看完。`;
+        return `\n\n${label}是${card.name}（${card.isReversed ? "逆位" : "正位"}）。${advice}`;
+      }).join("");
+
+      const ending = state.spread === 3
+        ? "\n\n把三张牌连起来看，它们不是三句分开的判断，而是在描述一个推进：过去留下的经验塑造了你现在的反应，现在这张牌又决定了未来能不能打开一点新的空间。第一张牌像背景音，说明你为什么会这样紧张或期待；第二张牌落在当下，提醒你此刻真正卡住的地方；第三张牌不是保证某个结果，而是在指出如果你愿意调整姿势，事情可能往哪个方向松动。它不是命运替你作出的决定，而是把你的犹豫拆开，让你看见哪些来自旧的疲惫，哪些属于此刻真实的需要，哪些只是未来还没被你命名。对你来说，最重要的是不要只问自己会不会被选择，也可以问问自己想不想选择。\n\n给你的提醒：今天先做一件非常具体的小事。把这个问题写下来，再在旁边写三行：我真正担心什么、我已经做到了什么、我下一步可以选择什么。答案不需要一下子完整，但你可以先把自己放回中心一点。"
+        : "\n\n这张牌给你的不是命令，只是一枚小指南针。它在提醒你：不要急着把这件事变成最终答案，也不要为了显得懂事，就把自己的感受压成一句“都可以”。你已经比自己以为的更勇敢，但接下来要练习的不是更用力地撑住，而是更认真地辨认：什么让你靠近自己，什么又让你离自己越来越远。\n\n给你的提醒：先做一个十分钟以内能完成的小动作。可以是吃饭、回复一条消息、写下真实想法、查一个现实信息，或者暂时不做决定。重点不是立刻改变命运，而是让你重新感觉到：这件事里，你也有位置。";
+      return opening + body + ending;
+    }
+
+    function readingPayload() {
+      return {
+        question: state.question,
+        spread: state.spread,
+        cards: state.selected.map((card, index) => ({
+          position: state.spread === 3 ? ["过去", "现在", "未来"][index] : "核心提示",
+          name: card.name,
+          en: card.en,
+          suit: card.suit,
+          numeral: card.numeral,
+          reversed: card.isReversed,
+          uprightMeaning: card.upright,
+          reversedMeaning: card.reversed
+        }))
+      };
+    }
+
+    async function requestAiReading() {
+      return requestReading(readingPayload());
+    }
+
+    async function requestReading(payload) {
+      const response = await fetch("/api/reading", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        throw new Error(`reading api failed: ${response.status}`);
+      }
+      const data = await response.json();
+      if (!data || typeof data.readingText !== "string" || !data.readingText.trim()) {
+        throw new Error("reading api returned empty text");
+      }
+      return data.readingText.trim();
+    }
+
+    async function getReadingText() {
+      try {
+        return await requestAiReading();
+      } catch (error) {
+        console.info("AI reading unavailable, using local fallback.", error);
+        return buildReading();
+      }
+    }
+
+    function blessingPayload(drawCount, readingText = "") {
+      return {
+        drawCount,
+        lastQuestion: state.question,
+        spread: state.spread,
+        lastReadingText: readingText,
+        lastCards: state.selected.map((card, index) => ({
+          position: state.spread === 3 ? ["过去", "现在", "未来"][index] : "核心提示",
+          name: card.name,
+          en: card.en,
+          suit: card.suit,
+          numeral: card.numeral,
+          reversed: card.isReversed
+        }))
+      };
+    }
+
+    async function requestBlessing(payload) {
+      const response = await fetch("/api/blessing", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) {
+        throw new Error(`blessing api failed: ${response.status}`);
+      }
+      const data = await response.json();
+      if (!data || typeof data.blessingText !== "string" || !data.blessingText.trim()) {
+        throw new Error("blessing api returned empty text");
+      }
+      return data.blessingText.trim();
+    }
+
+    function fallbackBlessing() {
+      const index = Math.floor(Math.random() * FALLBACK_BLESSINGS.length);
+      return FALLBACK_BLESSINGS[index];
+    }
+
+    function resetBlessingModal() {
+      const panel = $("#blessingModal .blessing");
+      panel.classList.remove("is-opened");
+      $("#giftBox").classList.remove("opened");
+      $("#blessingIntro").textContent = "你发现了一份藏起来的小礼物。";
+      $("#blessingText").textContent = "";
+      $("#openBlessingGift").textContent = "~ 拆开礼物 ~";
+      $("#openBlessingGift").disabled = false;
+      $("#openBlessingGift").style.display = "";
+      $("#closeBlessing").textContent = "~ 收起 ~";
+      $("#closeBlessing").classList.remove("primary");
+      $("#blessingNote").style.display = "";
+      state.blessingOpening = false;
+    }
+
+    function openBlessingModal(payload) {
+      state.pendingBlessing = payload;
+      resetBlessingModal();
+      $("#blessingModal").classList.add("active");
+    }
+
+    function storeHiddenBlessing(blessingText, payload) {
+      const records = parseStoredJson("hiddenBlessings") || [];
+      const record = {
+        id: `blessing-${Date.now()}`,
+        date: localDateKey(),
+        drawCount: Number(payload.drawCount || 0),
+        question: payload.lastQuestion || "",
+        cards: Array.isArray(payload.lastCards) ? payload.lastCards : [],
+        blessingText
+      };
+      records.unshift(record);
+      localStorage.setItem("hiddenBlessings", JSON.stringify(records.slice(0, 30)));
+      return record;
+    }
+
+    async function openGift() {
+      if (state.blessingOpening) return;
+      state.blessingOpening = true;
+      const payload = state.pendingBlessing || blessingPayload(Number(localStorage.getItem("tarotDrawCount") || "0"));
+      const panel = $("#blessingModal .blessing");
+      panel.classList.add("is-opened");
+      $("#giftBox").classList.add("opened");
+      $("#openBlessingGift").disabled = true;
+      $("#openBlessingGift").textContent = "星光正在写下这张小纸条……";
+      $("#blessingText").textContent = "星光正在写下这张小纸条……";
+
+      let blessingText;
+      try {
+        blessingText = await requestBlessing(payload);
+      } catch (error) {
+        console.info("AI blessing unavailable, using local fallback.", error);
+        blessingText = fallbackBlessing();
+      }
+
+      await wait(900);
+      $("#blessingText").textContent = blessingText;
+      $("#openBlessingGift").style.display = "none";
+      $("#closeBlessing").textContent = "~ 收好这张纸条 ~";
+      $("#closeBlessing").classList.add("primary");
+      storeHiddenBlessing(blessingText, payload);
+      state.blessingOpening = false;
+    }
+
+    function localDateKey(date = new Date()) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    }
+
+    function hashString(value) {
+      let hash = 2166136261;
+      for (let i = 0; i < value.length; i++) {
+        hash ^= value.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      return hash >>> 0;
+    }
+
+    function dailyStorageKey(dateKey = localDateKey()) {
+      return `dailyCard:${dateKey}`;
+    }
+
+    function parseStoredJson(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key) || "null");
+      } catch {
+        return null;
+      }
+    }
+
+    function isValidDailyCard(value, date) {
+      return (
+        value &&
+        value.date === date &&
+        Number.isInteger(value.cardId) &&
+        tarotDeck[value.cardId] &&
+        typeof value.reversed === "boolean" &&
+        typeof value.readingText === "string" &&
+        value.readingText.trim()
+      );
+    }
+
+    function dailyFallbackReading(card, isReversed) {
+      const keyword = isReversed ? card.reversed : card.upright;
+      const direction = isReversed ? "逆位" : "正位";
+      const gentleAdvice = isReversed
+        ? "逆位并不是在说你做得不好，而是在提醒你：有些地方可能已经用力太久了。你也许很习惯先照顾别人、先理解局面、先替现实找理由，但今天可以把自己也放进被照顾的名单里。"
+        : "正位说明这张牌的力量比较顺，它不是催你立刻做一个很大的决定，而是把一个小小的方向递到你手里。你可以顺着已经出现的一点光往前走，先做一件清楚、真实、不会过度消耗自己的事。";
+      return `今天的牌是${card.name}（${direction}）。这张牌像是在轻轻提醒你：${keyword}。\n\n${gentleAdvice} 对安沛晴来说，今天真正重要的也许不是把所有事情想明白，而是确认自己的感受有位置。你可以敏感，也可以清醒；可以期待回应，也可以慢慢学着不把所有答案都交到别人手里。\n\n给你的提醒：今天选一件很小的事认真完成。吃一顿舒服的饭，整理一个待办，给自己十分钟安静，或者把最反复的念头写下来。不要急着判断未来，只先问问自己：此刻什么能让我更稳一点？这不是命运替你作出的决定，只是给你的一点提示。`;
+    }
+
+    function dailyPayload(card, isReversed) {
+      return {
+        question: "今天我需要收到什么提醒？",
+        spread: "daily",
+        cards: [{
+          position: "今日之牌",
+          name: card.name,
+          en: card.en,
+          suit: card.suit,
+          numeral: card.numeral,
+          reversed: isReversed,
+          uprightMeaning: card.upright,
+          reversedMeaning: card.reversed
+        }]
+      };
+    }
+
+    async function getDailyCard() {
+      const date = localDateKey();
+      const key = dailyStorageKey(date);
+      const cached = parseStoredJson(key);
+      if (isValidDailyCard(cached, date)) {
+        return cached;
+      }
+      const legacyCached = parseStoredJson("dailyCard");
+      if (isValidDailyCard(legacyCached, date)) {
+        localStorage.setItem(key, JSON.stringify(legacyCached));
+        return legacyCached;
+      }
+
+      const cardId = hashString(date) % tarotDeck.length;
+      const reversed = hashString(`${date}:direction`) % 2 === 0;
+      const card = tarotDeck[cardId];
+      let readingText;
+
+      try {
+        readingText = await requestReading(dailyPayload(card, reversed));
+      } catch (error) {
+        console.info("Daily AI reading unavailable, using local fallback.", error);
+        readingText = dailyFallbackReading(card, reversed);
+      }
+
+      const dailyCard = { date, cardId, reversed, readingText };
+      localStorage.setItem(key, JSON.stringify(dailyCard));
+      localStorage.setItem("dailyCard", JSON.stringify(dailyCard));
+      return dailyCard;
+    }
+
+    function renderDailyCard(dailyCard) {
+      const card = tarotDeck[dailyCard.cardId];
+      if (!card) return;
+      const direction = dailyCard.reversed ? "逆位" : "正位";
+      const keyword = dailyCard.reversed ? card.reversed : card.upright;
+      $("#dailyContent").innerHTML = `
+        <p class="note daily-subtitle">今天，星光想轻轻提醒你——</p>
+        <div class="reading-card daily-card ${dailyCard.reversed ? "reversed" : ""}">
+          <img src="${cardSrc(card)}" alt="${card.name}">
+          <p>${card.name}<br>${direction}</p>
+        </div>
+        <p class="muted center daily-keyword">牌面关键词：${keyword}</p>
+        <p class="note daily-reading">${dailyCard.readingText}</p>
+      `;
+    }
+
+    function saveHistory(reading) {
+      const records = JSON.parse(localStorage.getItem("tarotHistory") || "[]");
+      records.unshift({
+        time: new Date().toLocaleString("zh-CN"),
+        question: state.question,
+        spread: state.spread,
+        cards: state.selected.map((card) => `${card.name}${card.isReversed ? "逆位" : "正位"}`),
+        reading
+      });
+      localStorage.setItem("tarotHistory", JSON.stringify(records.slice(0, 20)));
+    }
+
+    async function typeText(text) {
+      const el = $("#readingText");
+      el.textContent = "";
+      for (let i = 0; i < text.length; i++) {
+        el.textContent += text[i];
+        await wait(text[i] === "\n" ? 30 : 12);
+      }
+    }
+
+    async function finishReading() {
+      const tarotDrawCount = Number(localStorage.getItem("tarotDrawCount") || "0") + 1;
+      localStorage.setItem("tarotDrawCount", String(tarotDrawCount));
+      console.log(`tarotDrawCount updated: ${tarotDrawCount}`);
+      $("#readingCards").innerHTML = state.selected.map((card) => `
+        <div class="reading-card ${card.isReversed ? "reversed" : ""} ${state.selected.length > 1 ? "compact" : ""}">
+          <img src="${cardSrc(card)}" alt="${card.name}">
+          <p>${card.name}<br><span>${card.isReversed ? "逆位" : "正位"}</span></p>
+        </div>
+      `).join("");
+      go("readingPage");
+      $("#readingText").textContent = "星辰正在写回信……";
+      const [reading] = await Promise.all([getReadingText(), wait(900)]);
+      saveHistory(reading);
+      await typeText(reading);
+      const shouldTriggerBlessing = tarotDrawCount > 0 && tarotDrawCount % 5 === 0;
+      console.log(`hidden blessing triggered: ${shouldTriggerBlessing}`);
+      if (shouldTriggerBlessing) {
+        const payload = blessingPayload(tarotDrawCount, reading);
+        setTimeout(() => openBlessingModal(payload), 1300);
+      }
+    }
+
+    async function renderDaily() {
+      go("dailyPage");
+      $("#dailyContent").innerHTML = `<p class="note">星辰正在翻开今天的牌……</p>`;
+      const dailyCard = await getDailyCard();
+      renderDailyCard(dailyCard);
+    }
+
+    function renderGalleryTabs() {
+      $("#galleryTabs").innerHTML = Object.entries(SUITS).map(([key, label]) => `
+        <button class="tab ${state.gallerySuit === key ? "active" : ""}" data-suit="${key}">${label}</button>
+      `).join("");
+    }
+
+    function galleryMarkup(suit) {
+      return tarotDeck.filter((card) => card.suit === suit).map((card) => `
+        <button class="mini-card" data-card="${card.en}">
+          <img src="${cardSrc(card)}" alt="${card.name}" width="120" height="180" decoding="async">
+          <span>
+            <span class="card-name">${card.name}</span>
+            <span class="card-en">${card.en}</span>
+          </span>
+        </button>
+      `).join("");
+    }
+
+    async function renderGallery(options = {}) {
+      const grid = $("#galleryGrid");
+      const nextCategory = state.gallerySuit;
+      const shouldAnimate = options.animate !== false && state.currentGalleryCategory;
+      if (state.currentGalleryCategory === nextCategory && grid.children.length) return;
+
+      const renderToken = ++state.galleryRenderToken;
+      renderGalleryTabs();
+      if (shouldAnimate) {
+        grid.classList.add("is-switching");
+        await wait(120);
+        if (renderToken !== state.galleryRenderToken) return;
+      }
+
+      grid.innerHTML = galleryMarkup(nextCategory);
+      state.currentGalleryCategory = nextCategory;
+      console.log(`gallery switched to: ${nextCategory}`);
+
+      requestAnimationFrame(() => {
+        if (renderToken !== state.galleryRenderToken) return;
+        grid.classList.remove("is-switching");
+      });
+    }
+
+    function openDetail(card) {
+      $("#detailContent").innerHTML = `
+        <div class="detail-grid">
+          <img src="${cardSrc(card)}" alt="${card.name}">
+          <div>
+            <div class="kicker">${SUITS[card.suit]} · ${card.en}</div>
+            <h3>${card.name}</h3>
+            <p class="muted"><strong>正位：</strong>${card.upright}</p>
+            <p class="muted"><strong>逆位：</strong>${card.reversed}</p>
+          </div>
+        </div>
+      `;
+      $("#detailModal").classList.add("active");
+    }
+
+    function renderHistory() {
+      const records = JSON.parse(localStorage.getItem("tarotHistory") || "[]");
+      const hiddenBlessings = parseStoredJson("hiddenBlessings") || [];
+      const historyHtml = records.length ? records.map((record) => `
+        <div class="history-item">
+          <strong>${record.time}</strong><br>
+          问题：${record.question}<br>
+          牌面：${record.cards.join("、")}
+        </div>
+      `).join("") : `<p class="note center">还没有记录。第一封月光回信正在路上。</p>`;
+      const blessingHtml = hiddenBlessings.length ? hiddenBlessings.map((record) => `
+        <div class="hidden-blessing-item">
+          <span class="hidden-blessing-meta">${record.date || ""} · ${record.question ? `关于“${String(record.question).slice(0, 24)}${String(record.question).length > 24 ? "…" : ""}”` : "一份藏起来的小礼物"}</span>
+          ${record.blessingText}
+        </div>
+      `).join("") : `<p class="muted center">还没有发现隐藏彩蛋。也许再多问几次，礼物就会出现。</p>`;
+      $("#historyList").innerHTML = `
+        ${historyHtml}
+        <div class="hidden-blessings">
+          <h3>隐藏彩蛋 🎉</h3>
+          ${blessingHtml}
+        </div>
+      `;
+    }
+
+    document.addEventListener("click", (event) => {
+      const goButton = event.target.closest("[data-go]");
+      if (goButton) go(goButton.dataset.go);
+
+      const spreadButton = event.target.closest(".spread-card");
+      if (spreadButton) {
+        state.spread = Number(spreadButton.dataset.spread);
+        $$(".spread-card").forEach((button) => button.classList.toggle("active", button === spreadButton));
+      }
+
+      const drawButton = event.target.closest(".draw-card");
+      if (drawButton) selectCard(drawButton);
+
+      const tab = event.target.closest(".tab");
+      if (tab) {
+        if (tab.dataset.suit === state.gallerySuit) return;
+        state.gallerySuit = tab.dataset.suit;
+        renderGallery();
+      }
+
+      const mini = event.target.closest(".mini-card");
+      if (mini) openDetail(tarotDeck.find((card) => card.en === mini.dataset.card));
+    });
+
+    $("#passwordButton").addEventListener("click", () => {
+      if ($("#passwordInput").value.trim() === PASSWORD) {
+        $("#passwordError").textContent = "";
+        go("welcomePage");
+      } else {
+        $("#passwordError").textContent = "暗号还没有对上，再试一次。";
+      }
+    });
+
+    $("#passwordInput").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") $("#passwordButton").click();
+    });
+
+    $("#beginDrawButton").addEventListener("click", beginDraw);
+    $("#dailyButton").addEventListener("click", renderDaily);
+    $("#prevSegment").addEventListener("click", () => {
+      $("#arcWrap").scrollBy({ left: -window.innerWidth * 0.72, behavior: "smooth" });
+    });
+    $("#nextSegment").addEventListener("click", () => {
+      $("#arcWrap").scrollBy({ left: window.innerWidth * 0.72, behavior: "smooth" });
+    });
+    $("#arcWrap").addEventListener("wheel", (event) => {
+      const wrap = $("#arcWrap");
+      const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (!delta) return;
+      event.preventDefault();
+      wrap.scrollLeft += delta;
+    }, { passive: false });
+    $("#closeDetail").addEventListener("click", () => $("#detailModal").classList.remove("active"));
+    $("#openBlessingGift").addEventListener("click", openGift);
+    $("#closeBlessing").addEventListener("click", () => {
+      $("#blessingModal").classList.remove("active");
+      resetBlessingModal();
+    });
+    $("#clearHistory").addEventListener("click", () => {
+      localStorage.removeItem("tarotHistory");
+      renderHistory();
+    });
+
+    preloadGalleryImages();
+  </script>
+</body>
+</html>
