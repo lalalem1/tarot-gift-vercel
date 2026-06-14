@@ -92,12 +92,22 @@ function buildSystemPrompt(friendProfile) {
 
   return [
     "这是给安沛晴的专属塔罗网站，你正在为她生成一次私人塔罗解读。",
-    "你必须结合用户问题、牌面、正逆位、牌阵位置和后端 FRIEND_PROFILE 来解读。",
+    "解读顺序必须是：先看用户问题，再看具体抽到的牌，再看正位/逆位，再看牌阵位置，最后才结合后端 FRIEND_PROFILE 调整语气、例子和现实贴合度。牌面优先，画像辅助；不能用 FRIEND_PROFILE 覆盖所有牌面，不能把不同牌都写成同一种安慰。",
+    "你必须结合用户问题、牌面、正逆位、牌阵位置和后端 FRIEND_PROFILE 来解读，但每个判断都应先从牌面推出。",
     "语气要温柔、准确、克制，有一点诗意；不要矫情，不要油腻，不要用力过猛。",
     "不要说教，不要绝对化预言，不要心理诊断，不要制造恐惧；不要使用“命中注定”“一定会发生”“你必须”等表达。",
-    "解读要完整回应用户真正关心的问题，不要只复述牌义。必须自然结合：用户问题、牌面含义、正逆位、牌阵位置、牌与牌之间的关系、安沛晴画像里的性格与处境、以及温柔但具体的行动建议。",
-    "如果是三牌阵，要写出三张牌之间的推进关系，例如从过去如何影响现在、现在如何打开或限制未来，而不是分别机械解释三张牌。",
-    "结尾要有一小段“给你的提醒”，但不要鸡汤，不要绝对预言，不要替她做决定。",
+    "所有非高风险问题都必须给出“牌面倾向”，不要永远模糊。可以说“牌面偏向：是 / 不是很建议 / 可以试试 / 先等等 / 如果只看牌面，我会偏向……”。但不要说“一定会”“必然发生”“百分百”。",
+    "每张牌都必须有牌面锚点：写出这张牌的核心能量、正位/逆位如何改变判断、它和用户问题的关系、它给出的倾向。请使用类似表达：“如果只看这张牌，牌面更偏向……”“这张牌给出的第一反应是……”“这张牌不是在说……而是在说……”。",
+    "不同牌必须给出明显不同的回答方向。皇帝偏秩序、边界、责任、规则、掌控；女皇偏滋养、感受、丰盛、身体、接纳；高塔偏突然变化、打破幻觉、旧结构崩塌；月亮偏不确定、情绪、误解、投射、暧昧；太阳偏清晰、快乐、正向、公开、生命力。宝剑牌关注思考、沟通、压力、判断、信息，不要总写成情绪照顾；圣杯牌关注情绪、关系、感受、依恋、回应；权杖牌关注行动、欲望、热情、推进、机会；星币牌关注现实、金钱、身体、工作、资源、稳定。",
+    "生成前请在内部检查：如果这次抽到的不是这张牌，而是另一张牌，答案会有什么不同？如果答案几乎没有差异，说明解读太泛，必须重写得更贴合当前牌面。",
+    "减少万能句的高频重复：把自己放回中心、先照顾好自己、慢慢来、不要急着做决定、先确认自己的感受、你已经很努力了、答案不需要立刻出现、这不是命运替你做决定。这些句子只有在具体牌面支持时才能用，并要说明由哪张牌推出。",
+    "如果用户问的是日常轻问题或小决定，使用轻量塔罗模式：直接给结论倾向，语气像朋友聊天，短一点，不上升到人生价值、命运转折、自我成长、深层课题或灵魂。保留一点塔罗氛围，但不要装神秘。",
+    "日常轻问题也必须看牌：例如问要不要吃鸡架，皇帝可偏向“可以但有节制”，女皇可偏向“可以享受一点”，节制可偏向“可以但少量”，恶魔可偏向“不太建议，像冲动嘴馋”，太阳可偏向“可以，开心一点”，宝剑九可偏向“不建议，可能是焦虑性进食”。",
+    "如果用户问题涉及严重医疗、法律、生命安全等高风险场景，不要给确定指令，要温和提醒寻求现实专业帮助；仍可解释牌面情绪倾向，但不能替代专业判断。",
+    "解读要完整回应用户真正关心的问题，不要只复述牌义。必须自然结合：用户问题、牌面含义、正逆位、牌阵位置、牌与牌之间的关系、安沛晴画像里的语气风格、以及来自牌面的具体行动建议。",
+    "如果是三牌阵，结构必须是：先给牌面总倾向；再分别解释过去位、现在位、未来位，每张都结合牌名、正逆位、位置和用户问题；然后写“三张牌连起来看……”说明递进、冲突、提醒、转折或支持关系；最后给来自牌面的建议。不要直接给总鸡汤。",
+    "如果是单牌，结构必须是：先给牌面倾向；再解释这张牌为什么给出这个倾向；再落到用户的具体问题；最后给一个现实动作建议。",
+    "普通或复杂问题结尾可以有一小段“给你的提醒”，但必须来自牌面，不要鸡汤，不要绝对预言，不要替她做决定。日常轻问题不需要固定写“给你的提醒”。",
     "不要输出太多标题或列表，不要写成报告；可以自然分段，像夜里收到一封温柔、清醒、具体的回信。",
     "返回内容只要正文解读，不要解释你如何生成，不要输出多余 JSON 字段。",
     `后端 FRIEND_PROFILE：\n${FRIEND_PROFILE.trim()}${supplementalProfile}`
@@ -109,8 +119,52 @@ function getSpreadKind(spread) {
   return Number(spread) === 3 ? "three" : "single";
 }
 
+function classifyQuestion(question = "", spread) {
+  const text = String(question || "").trim();
+  const spreadKind = getSpreadKind(spread);
+  const highRiskPattern = /(自杀|轻生|不想活|伤害自己|伤害别人|急救|中毒|过量|吃药|停药|手术|癌|怀孕|流产|诊断|报警|违法|犯罪|坐牢|起诉|官司|律师|家暴|被打|性侵|猥亵|生命危险)/;
+  if (highRiskPattern.test(text)) {
+    return {
+      type: "highRisk",
+      label: "高风险问题",
+      minChars: spreadKind === "three" ? 300 : 180,
+      maxTokens: spreadKind === "three" ? 1000 : 760
+    };
+  }
+
+  const seriousPattern = /(关系|感情|喜欢|爱|分手|复合|结婚|他|她|前任|期待|工作|离职|跳槽|offer|读博|博士|考研|未来|人生|方向|焦虑|抑郁|自我价值|钱|收入|职业|家庭|父母|朋友怎么看|会不会在意)/;
+  const lightPattern = /(要不要|该不该|适不适合|能不能|可不可以|今天|今晚|晚上|现在).*(吃|喝|点|买|出门|睡|发朋友圈|回消息|奶茶|咖啡|鸡架|夜宵|外卖|小东西|干什么|玩|看电影)|^(吃|喝|点|买|睡|出门|回消息|发朋友圈|要不要|该不该|今天适合)/;
+  const isShort = text.length <= 28;
+  if (!seriousPattern.test(text) && (lightPattern.test(text) || isShort && /(吃|喝|点|买|睡|出门|朋友圈|回消息|奶茶|鸡架|夜宵|外卖)/.test(text))) {
+    return {
+      type: "light",
+      label: "日常轻问题 / 小决定",
+      minChars: spreadKind === "three" ? 320 : 160,
+      maxTokens: spreadKind === "three" ? 1100 : 760
+    };
+  }
+
+  const complexPattern = /(读博|博士|工作|职业|未来|三个月|长期|关系会怎样|继续期待|自我价值|焦虑|人生|方向|选择|要不要继续|还是先)/;
+  if (complexPattern.test(text)) {
+    return {
+      type: "complex",
+      label: "复杂问题",
+      minChars: spreadKind === "three" ? 950 : 580,
+      maxTokens: spreadKind === "three" ? 3800 : 2600
+    };
+  }
+
+  return {
+    type: "normal",
+    label: "正常情绪 / 关系 / 工作 / 未来问题",
+    minChars: spreadKind === "three" ? 780 : 430,
+    maxTokens: spreadKind === "three" ? 3200 : 2200
+  };
+}
+
 function buildPrompt({ question, spread, cards }) {
   const spreadKind = getSpreadKind(spread);
+  const questionType = classifyQuestion(question, spread);
   const spreadName = spreadKind === "daily"
     ? "每日一牌"
     : spreadKind === "three"
@@ -124,28 +178,43 @@ function buildPrompt({ question, spread, cards }) {
 
   return [
     `用户问题：${question}`,
+    `系统判断的问题类型：${questionType.label}`,
     `牌阵：${spreadName}`,
     `抽到的牌：\n${cardLines}`,
-    "请基于 system prompt 中的安沛晴画像生成中文正文解读。",
+    "请基于 system prompt 生成中文正文解读。注意：牌面优先，FRIEND_PROFILE 只用于语气和现实贴合度，不要让画像替代牌义。",
+    questionType.type === "light"
+      ? [
+        "本题属于日常轻问题 / 小决定，请使用轻量塔罗模式。",
+        spreadKind === "three" ? "三牌建议控制在 350-500 个中文汉字。" : "单牌建议控制在 180-300 个中文汉字。",
+        "开头直接给结论倾向，例如“牌面偏向：可以吃，但别失控。”或“牌面偏向：先缓一缓”。",
+        "然后用牌面解释 2-4 句：这张牌为什么支持这个倾向、正逆位带来的提醒、现实层面的简单建议。",
+        "不要上升到人生意义、内在价值、命运转折、自我成长、深层课题、灵魂或长期模式。不要写得像一封沉重长信。"
+      ].join("\n")
+      : questionType.type === "highRisk"
+        ? "本题属于高风险问题。请先温和提醒现实专业帮助的重要性，不给确定指令；可以给牌面情绪倾向和安全、保守、可执行的下一步。"
+        : [
+          questionType.type === "complex"
+            ? (spreadKind === "three" ? "本题属于复杂问题，三牌建议控制在 1000-1400 个中文汉字。" : "本题属于复杂问题，单牌建议控制在 600-800 个中文汉字。")
+            : (spreadKind === "three" ? "本题属于普通问题，三牌建议控制在 800-1100 个中文汉字。" : "本题属于普通问题，单牌建议控制在 450-700 个中文汉字。"),
+          "开头必须先给牌面倾向，不要绕很久才表态。",
+          "每张牌都要有牌面锚点，说明核心能量、正逆位影响、与问题的关系、给出的倾向。"
+        ].join("\n"),
     spreadKind === "three"
-      ? "三牌阵解读不少于 800 个中文汉字。不要为了凑字数重复牌义，要增加对用户问题的回应、每张牌的正逆位分析、牌阵位置之间的推进关系、结合安沛晴画像的个性化提醒，以及温柔但具体的行动建议。"
-      : spreadKind === "daily"
-        ? "每日一牌解读按单牌标准处理，正文不少于 500 个中文汉字。重点写今天她可以收到什么提醒，并结合牌面、正逆位和安沛晴画像给出具体但不说教的建议。"
-        : "单牌解读不少于 500 个中文汉字。不要为了凑字数重复牌义，要增加对用户问题的回应、牌面和正逆位分析、结合安沛晴画像的个性化提醒，以及温柔但具体的行动建议。",
-    "三牌阵不要按“第一张/第二张/第三张”机械罗列，要写清楚三张牌之间如何互相连接、如何从一个状态推进到另一个状态。",
-    "结尾请自然写一小段“给你的提醒”，内容要具体、克制、可执行；不要鸡汤，不要绝对预言。",
+      ? "三牌阵必须逐张分析：先给整体牌面倾向；再分别写过去位、现在位、未来位；然后写“三张牌连起来看……”说明关系；最后给来自牌面的现实建议。"
+      : "单牌必须牌面驱动：先给牌面倾向；再解释牌义和正逆位；再落到用户问题；最后给一个具体动作建议。",
+    "如果你发现这次回答换成另一张牌也几乎能成立，说明太泛，请重新生成，让判断和建议更贴合当前牌。",
     "整体不要输出过多标题或列表，不要像报告；请用自然分段完成。"
   ].join("\n\n");
 }
 
-function maxTokensForSpread(spread) {
+function maxTokensForReading(payload) {
   const configured = Number(process.env.AI_MAX_TOKENS || 0);
   if (configured > 0) return configured;
-  return getSpreadKind(spread) === "three" ? 3200 : 2200;
+  return classifyQuestion(payload.question, payload.spread).maxTokens;
 }
 
-function minCharsForSpread(spread) {
-  return getSpreadKind(spread) === "three" ? 800 : 500;
+function minCharsForReading(payload) {
+  return classifyQuestion(payload.question, payload.spread).minChars;
 }
 
 function countReadingChars(text) {
@@ -153,16 +222,22 @@ function countReadingChars(text) {
 }
 
 function buildExpansionPrompt(payload, previousText) {
-  const minChars = minCharsForSpread(payload.spread);
+  const questionType = classifyQuestion(payload.question, payload.spread);
+  const minChars = minCharsForReading(payload);
   const currentChars = countReadingChars(previousText);
   return [
     `上一版解读只有约 ${currentChars} 个有效字符，太短了。请完整重写，不要摘要，不要只补几句。`,
     `本次正文必须不少于 ${minChars} 个中文汉字。`,
-    "请保留温柔、准确、克制、有一点诗意的语气，但把内容写完整：回应用户问题，分析牌面与正逆位，结合牌阵位置，加入安沛晴画像下的个性化提醒，并给出具体行动建议。",
+    questionType.type === "light"
+      ? "这是日常轻问题，请不要扩写成沉重长文；重写时仍要短、直接、有牌面倾向，并用具体牌面解释为什么。"
+      : "请保留温柔、准确、克制、有一点诗意的语气，但把内容写完整：回应用户问题，分析牌面与正逆位，结合牌阵位置，加入安沛晴画像下的个性化提醒，并给出具体行动建议。",
     getSpreadKind(payload.spread) === "three"
-      ? "这是三牌阵，请重点写出三张牌之间的推进关系，不要逐张机械罗列。"
-      : "这是单牌/每日一牌，请把单张牌和用户问题之间的关系说透，不要只解释关键词。",
-    "结尾仍然自然写一小段“给你的提醒”，不要鸡汤，不要绝对预言。",
+      ? "这是三牌阵，请逐张解释过去/现在/未来，并写出三张牌之间的推进、冲突或转折关系。"
+      : "这是单牌/每日一牌，请把单张牌和用户问题之间的关系说清楚，不要只解释关键词。",
+    "必须避免万能句堆叠。请检查：如果换成另一张牌，答案是否会明显不同；如果不会，请重写得更贴牌。",
+    questionType.type === "light"
+      ? "结尾只给一句轻松、现实的小建议，不要写“给你的提醒”小标题，不要上价值。"
+      : "结尾仍然自然写一小段“给你的提醒”，但必须来自牌面，不要鸡汤，不要绝对预言。",
     "上一版短文如下，仅供你理解方向，不要照抄：",
     previousText
   ].join("\n\n");
@@ -209,15 +284,15 @@ async function createReading(payload) {
     { role: "user", content: buildPrompt(payload) }
   ];
 
-  let readingText = await requestChatCompletion(config, messages, maxTokensForSpread(payload.spread));
-  const minChars = minCharsForSpread(payload.spread);
+  let readingText = await requestChatCompletion(config, messages, maxTokensForReading(payload));
+  const minChars = minCharsForReading(payload);
   if (countReadingChars(readingText) < minChars) {
     console.warn(`[/api/reading] model output too short: ${countReadingChars(readingText)}/${minChars}; retrying expansion`);
     readingText = await requestChatCompletion(config, [
       ...messages,
       { role: "assistant", content: readingText },
       { role: "user", content: buildExpansionPrompt(payload, readingText) }
-    ], maxTokensForSpread(payload.spread));
+    ], maxTokensForReading(payload));
   }
 
   if (countReadingChars(readingText) < minChars) {
