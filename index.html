@@ -368,6 +368,18 @@
       background: rgba(255, 230, 250, .16);
     }
 
+    .btn.share-btn {
+      border-color: rgba(255, 250, 255, .72);
+      background: rgba(255, 238, 252, .22);
+      box-shadow: 0 0 26px rgba(255, 232, 250, .16), inset 0 0 18px rgba(255, 250, 255, .06);
+      color: rgba(255, 250, 255, .98);
+    }
+
+    .btn.share-btn:hover {
+      background: rgba(255, 242, 253, .28);
+      box-shadow: 0 0 36px rgba(255, 232, 250, .22), inset 0 0 18px rgba(255, 250, 255, .08);
+    }
+
     .icon-btn {
       width: 44px;
       height: 44px;
@@ -829,6 +841,47 @@
       padding-right: 0;
     }
 
+    .reading-copy {
+      position: relative;
+    }
+
+    .reading-question {
+      position: absolute;
+      top: 6px;
+      right: 0;
+      max-width: min(420px, 46%);
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 250, 255, .24);
+      background: linear-gradient(135deg, rgba(255,255,255,.13), rgba(255,224,248,.07));
+      box-shadow:
+        inset 0 0 18px rgba(255,255,255,.08),
+        0 12px 28px rgba(74, 39, 93, .08);
+      color: rgba(255,250,255,.82);
+      font-family: var(--font-hand);
+      font-size: clamp(13px, 1.05vw, 15px);
+      line-height: 1.55;
+      text-align: left;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .reading-question:empty {
+      display: none;
+    }
+
+    .reading-question::before,
+    .reading-question::after {
+      content: "✦";
+      color: rgba(255,250,255,.68);
+      margin: 0 8px 0 0;
+      font-size: .8em;
+    }
+
+    .reading-question::after {
+      margin: 0 0 0 8px;
+    }
+
     #dailyPage.page.active {
       justify-content: flex-start;
     }
@@ -875,6 +928,16 @@
       line-height: 1.9;
       font-style: normal;
       text-align: left;
+    }
+
+    #dailyContent .daily-result-actions {
+      margin-top: 22px;
+      gap: 12px;
+    }
+
+    #dailyContent .daily-result-actions .btn {
+      min-width: 148px;
+      padding-inline: 22px;
     }
 
     .tabs {
@@ -1523,6 +1586,13 @@
       .spread-options, .reading-layout, .detail-grid {
         grid-template-columns: 1fr;
       }
+      .reading-question {
+        position: static;
+        max-width: 100%;
+        width: fit-content;
+        margin: 0 auto 16px;
+        border-radius: 18px;
+      }
       .draw-header {
         display: block;
         text-align: center;
@@ -1586,6 +1656,13 @@
       #dailyContent .daily-keyword {
         max-width: 88vw;
         font-size: 13px;
+      }
+      #dailyContent .daily-result-actions {
+        margin-top: 16px;
+      }
+      #dailyContent .daily-result-actions .btn {
+        min-width: 132px;
+        padding-inline: 18px;
       }
       .gallery-grid {
         grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
@@ -1694,12 +1771,14 @@
       <div class="frame">
         <div class="reading-layout">
           <div class="reading-cards" id="readingCards"></div>
-          <div>
+          <div class="reading-copy">
             <div class="kicker">The cards have answered</div>
             <h2>月光里的回信</h2>
             <div class="divider">── ✦ ☾ ✦ ──</div>
+            <div class="reading-question" id="readingQuestion"></div>
             <div class="typewriter" id="readingText"></div>
             <div class="actions">
+              <button class="btn share-btn" id="shareReadingButton">✦ 生成分享图</button>
               <button class="btn" data-go="welcomePage">~ 回到首页 ~</button>
               <button class="btn primary" data-go="questionPage">~ 再问一次 ~</button>
             </div>
@@ -1714,7 +1793,7 @@
         <h2>今日之牌</h2>
         <div class="divider">── ✦ ☾ ✦ ──</div>
         <div id="dailyContent"></div>
-        <div class="actions">
+        <div class="actions" id="dailyStaticActions">
           <button class="btn" data-go="welcomePage">~ 返回 ~</button>
         </div>
       </div>
@@ -1753,6 +1832,7 @@
     <div class="modal-panel">
       <div id="detailContent"></div>
       <div class="actions">
+        <button class="btn share-btn" id="shareDetailButton">✦ 生成分享图</button>
         <button class="btn primary" id="closeDetail">~ 收起 ~</button>
       </div>
     </div>
@@ -1790,11 +1870,13 @@
       </div>
       <div class="actions blessing-actions">
         <button class="btn primary" id="openBlessingGift">~ 拆开礼物 ~</button>
+        <button class="btn share-btn" id="shareBlessingButton" style="display:none">✦ 生成分享图</button>
         <button class="btn" id="closeBlessing">~ 收起 ~</button>
       </div>
     </div>
   </div>
 
+  <script src="share.js?v=20260614-reading-question-share"></script>
   <script>
     const PASSWORD = "0614";
     const SUITS = {
@@ -1902,7 +1984,11 @@
       galleryRenderToken: 0,
       galleryImagesPreloaded: false,
       pendingBlessing: null,
-      blessingOpening: false
+      blessingOpening: false,
+      lastReadingText: "",
+      currentDailyCard: null,
+      currentDetailCard: null,
+      currentBlessingText: ""
     };
 
     const FALLBACK_BLESSINGS = [
@@ -1920,6 +2006,86 @@
     const $$ = (selector) => [...document.querySelectorAll(selector)];
     const cardSrc = (card) => `cards/${card.file.replace(/\.png$/, ".jpg")}`;
     const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    function shareCardData(card, index = 0, spread = state.spread) {
+      return {
+        name: card.name,
+        en: card.en,
+        suit: card.suit,
+        suitLabel: SUITS[card.suit] || card.suit,
+        image: cardSrc(card),
+        reversed: Boolean(card.isReversed),
+        position: Number(spread) === 3 ? ["过去", "现在", "未来"][index] : "",
+        meaning: card.isReversed ? card.reversed : card.upright
+      };
+    }
+
+    async function withShareStatus(button, action) {
+      if (!button || button.disabled) return;
+      const originalText = button.textContent;
+      button.disabled = true;
+      button.textContent = "正在生成分享图…";
+      try {
+        await action();
+        button.textContent = "已下载到本地";
+        await wait(1200);
+      } catch (error) {
+        console.error("share image failed", error);
+        button.textContent = "生成失败，请重试";
+        await wait(1400);
+      } finally {
+        button.textContent = originalText;
+        button.disabled = false;
+      }
+    }
+
+    function currentReadingSharePayload() {
+      return {
+        question: state.question,
+        spreadLabel: state.spread === 3 ? "三牌" : "单牌",
+        readingText: state.lastReadingText,
+        date: new Date(),
+        cards: state.selected.map((card, index) => shareCardData(card, index))
+      };
+    }
+
+    function currentDailySharePayload() {
+      const dailyCard = state.currentDailyCard;
+      if (!dailyCard) throw new Error("daily card is not ready");
+      const card = tarotDeck[dailyCard.cardId];
+      if (!card) throw new Error("daily card data is missing");
+      return {
+        name: card.name,
+        en: card.en,
+        image: cardSrc(card),
+        reversed: dailyCard.reversed,
+        readingText: dailyCard.readingText,
+        date: dailyCard.date || new Date()
+      };
+    }
+
+    function currentDetailSharePayload() {
+      const card = state.currentDetailCard;
+      if (!card) throw new Error("detail card is not ready");
+      return {
+        name: card.name,
+        en: card.en,
+        suitLabel: SUITS[card.suit] || card.suit,
+        image: cardSrc(card),
+        meaning: card.upright,
+        reversedMeaning: card.reversed,
+        date: new Date()
+      };
+    }
+
+    function currentBlessingSharePayload() {
+      const text = state.currentBlessingText || $("#blessingText").textContent.trim();
+      if (!text || text.includes("正在写下")) throw new Error("blessing text is not ready");
+      return {
+        text,
+        date: new Date()
+      };
+    }
 
     function preloadGalleryImages() {
       if (state.galleryImagesPreloaded) return;
@@ -2197,9 +2363,11 @@
       $("#giftBox").classList.remove("opened");
       $("#blessingIntro").textContent = "你发现了一份藏起来的小礼物。";
       $("#blessingText").textContent = "";
+      state.currentBlessingText = "";
       $("#openBlessingGift").textContent = "~ 拆开礼物 ~";
       $("#openBlessingGift").disabled = false;
       $("#openBlessingGift").style.display = "";
+      $("#shareBlessingButton").style.display = "none";
       $("#closeBlessing").textContent = "~ 收起 ~";
       $("#closeBlessing").classList.remove("primary");
       $("#blessingNote").style.display = "";
@@ -2235,7 +2403,7 @@
       panel.classList.add("is-opened");
       $("#giftBox").classList.add("opened");
       $("#openBlessingGift").disabled = true;
-      $("#openBlessingGift").textContent = "星光正在写下这张小纸条……";
+      $("#openBlessingGift").style.display = "none";
       $("#blessingText").textContent = "星光正在写下这张小纸条……";
 
       let blessingText;
@@ -2248,8 +2416,9 @@
 
       await wait(900);
       $("#blessingText").textContent = blessingText;
-      $("#openBlessingGift").style.display = "none";
-      $("#closeBlessing").textContent = "~ 收好这张纸条 ~";
+      state.currentBlessingText = blessingText;
+      $("#shareBlessingButton").style.display = "";
+      $("#closeBlessing").textContent = "~ 收起 ~";
       $("#closeBlessing").classList.add("primary");
       storeHiddenBlessing(blessingText, payload);
       state.blessingOpening = false;
@@ -2355,6 +2524,7 @@
     function renderDailyCard(dailyCard) {
       const card = tarotDeck[dailyCard.cardId];
       if (!card) return;
+      state.currentDailyCard = dailyCard;
       const direction = dailyCard.reversed ? "逆位" : "正位";
       const keyword = dailyCard.reversed ? card.reversed : card.upright;
       $("#dailyContent").innerHTML = `
@@ -2365,7 +2535,12 @@
         </div>
         <p class="muted center daily-keyword">牌面关键词：${keyword}</p>
         <p class="note daily-reading">${dailyCard.readingText}</p>
+        <div class="actions daily-result-actions">
+          <button class="btn share-btn" id="shareDailyButton">✦ 生成分享图</button>
+          <button class="btn" data-go="welcomePage">~ 返回 ~</button>
+        </div>
       `;
+      $("#dailyStaticActions").style.display = "none";
     }
 
     function saveHistory(reading) {
@@ -2393,6 +2568,9 @@
       const tarotDrawCount = Number(localStorage.getItem("tarotDrawCount") || "0") + 1;
       localStorage.setItem("tarotDrawCount", String(tarotDrawCount));
       console.log(`tarotDrawCount updated: ${tarotDrawCount}`);
+      state.lastReadingText = "";
+      $("#shareReadingButton").disabled = true;
+      $("#readingQuestion").textContent = state.question ? `你问：${state.question}` : "";
       $("#readingCards").innerHTML = state.selected.map((card) => `
         <div class="reading-card ${card.isReversed ? "reversed" : ""} ${state.selected.length > 1 ? "compact" : ""}">
           <img src="${cardSrc(card)}" alt="${card.name}">
@@ -2402,8 +2580,10 @@
       go("readingPage");
       $("#readingText").textContent = "星辰正在写回信……";
       const [reading] = await Promise.all([getReadingText(), wait(900)]);
+      state.lastReadingText = reading;
       saveHistory(reading);
       await typeText(reading);
+      $("#shareReadingButton").disabled = false;
       const shouldTriggerBlessing = tarotDrawCount > 0 && tarotDrawCount % 5 === 0;
       console.log(`hidden blessing triggered: ${shouldTriggerBlessing}`);
       if (shouldTriggerBlessing) {
@@ -2414,6 +2594,7 @@
 
     async function renderDaily() {
       go("dailyPage");
+      $("#dailyStaticActions").style.display = "";
       $("#dailyContent").innerHTML = `<p class="note">星辰正在翻开今天的牌……</p>`;
       const dailyCard = await getDailyCard();
       renderDailyCard(dailyCard);
@@ -2462,14 +2643,15 @@
     }
 
     function openDetail(card) {
+      state.currentDetailCard = card;
       $("#detailContent").innerHTML = `
         <div class="detail-grid">
           <img src="${cardSrc(card)}" alt="${card.name}">
           <div>
             <div class="kicker">${SUITS[card.suit]} · ${card.en}</div>
             <h3>${card.name}</h3>
-            <p class="muted"><strong>正位：</strong>${card.upright}</p>
-            <p class="muted"><strong>逆位：</strong>${card.reversed}</p>
+            <p class="muted"><strong>正位牌义：</strong>${card.upright}</p>
+            <p class="muted"><strong>逆位牌义：</strong>${card.reversed}</p>
           </div>
         </div>
       `;
@@ -2523,6 +2705,11 @@
 
       const mini = event.target.closest(".mini-card");
       if (mini) openDetail(tarotDeck.find((card) => card.en === mini.dataset.card));
+
+      const dailyShareButton = event.target.closest("#shareDailyButton");
+      if (dailyShareButton) {
+        withShareStatus(dailyShareButton, () => TarotShare.drawDailyShare(currentDailySharePayload()));
+      }
     });
 
     $("#passwordButton").addEventListener("click", () => {
@@ -2540,6 +2727,15 @@
 
     $("#beginDrawButton").addEventListener("click", beginDraw);
     $("#dailyButton").addEventListener("click", renderDaily);
+    $("#shareReadingButton").addEventListener("click", () => {
+      withShareStatus($("#shareReadingButton"), () => TarotShare.drawReadingShare(currentReadingSharePayload()));
+    });
+    $("#shareDetailButton").addEventListener("click", () => {
+      withShareStatus($("#shareDetailButton"), () => TarotShare.drawCardShare(currentDetailSharePayload()));
+    });
+    $("#shareBlessingButton").addEventListener("click", () => {
+      withShareStatus($("#shareBlessingButton"), () => TarotShare.drawBlessingShare(currentBlessingSharePayload()));
+    });
     $("#prevSegment").addEventListener("click", () => {
       $("#arcWrap").scrollBy({ left: -window.innerWidth * 0.72, behavior: "smooth" });
     });
